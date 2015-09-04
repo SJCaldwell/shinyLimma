@@ -61,8 +61,13 @@ shinyUI(fluidPage(
                   ','),
      p("Version 0.1 of shiny-Limma accepts only Affymetrix Probe Data")
     ),
+    
+    
   mainPanel(
-    tableOutput('contents')
+    tableOutput('contents'),
+    #Button that reads in files and attempts to run ilmn
+    actionButton("fileSubmitter", "Submit files!")
+    
   )
      
 )
