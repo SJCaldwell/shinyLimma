@@ -16,14 +16,7 @@ shinyUI(fluidPage(
                 )
      ),
      tags$hr(),
-     checkboxInput("header", "Header", TRUE),
-     radioButtons('sep', 'Seperator',
-                  c(Comma = ",",
-                    Semicolon = ";",
-                    Tab = "\t"),
-                  ','),
-     tags$hr(),
-     
+
      
      fileInput("controlProbeFile", "Select Affymetrix Control Probe File",
                accept = c(
@@ -35,15 +28,8 @@ shinyUI(fluidPage(
                )
       ),
      tags$hr(),
-     checkboxInput("header", "Header", TRUE),
-     radioButtons('sep', 'Seperator',
-                  c(Comma = ",",
-                    Semicolon = ";",
-                    Tab = "\t"),
-                  ','),
-     tags$hr(),
      
-     fileInput("targets", "Upload your targets text",
+     fileInput("targets", "Upload your targets.txt",
                accept = c(
                  'text/csv',
                  'text/comma-seperated-values',
@@ -53,13 +39,7 @@ shinyUI(fluidPage(
                )
      ),
      tags$hr(),
-     checkboxInput("header", "Header", TRUE),
-     radioButtons('sep', 'Seperator',
-                  c(Comma = ",",
-                    Semicolon = ";",
-                    Tab = "\t"),
-                  ','),
-     p("Version 0.1 of shiny-Limma accepts only Affymetrix Probe Data")
+     p("Version 0.1 of shiny-Limma accepts only Illumina Probe Data")
     ),
     
     
