@@ -1,5 +1,6 @@
 library(shiny)
 library(limma)
+library(png)
 #Define server logic required to print whether dataset was uploaded
 # setting this option. Here we'll raise limit to 130MB.
 options(shiny.maxRequestSize = 130*1024^2)
@@ -11,7 +12,10 @@ shinyServer(function(input, output) {
     # column will contain the local filenames where the data can
     # be found.
   
+
   observeEvent(input$fileSubmitter, {
+    
+    
     #Capture control probe information from input
     probeFile = input$probeFile
     controlFile = input$controlProbeFile
@@ -27,7 +31,19 @@ shinyServer(function(input, output) {
     #Read ilmn just like mom used to do.
     readTargets(file = "0", path = targetPath)
     x <- read.ilmn("0" , "0", path = probePath, ctrlpath = controlPath)
+    
+    output$uploadResult <- renderImage({
+      return(list(
+        src = "images/Go_check.png",
+        contentType = "image/png",
+        alt = "Your file was uploaded. Move on to preprocessing!"
+      ))
+    }, deleteFile = FALSE)
+    
   })
+  
+  
+  
   
 
   
