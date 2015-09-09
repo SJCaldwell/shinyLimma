@@ -5,12 +5,25 @@ library(png)
 # setting this option. Here we'll raise limit to 130MB.
 options(shiny.maxRequestSize = 130*1024^2)
 
+x <- NULL 
+
+getX <- function(){
+  return(x)
+}
+
+changeX<- function (y){
+  x <<- y
+}
+
 shinyServer(function(input, output) {
     # input$file1 will be NULL initially. After the user selects
     # and uploads a file, it will be a data frame with 'name',
     # 'size', 'type', and 'datapath' columns. The 'datapath'
     # column will contain the local filenames where the data can
     # be found.
+  
+  #Define a global variable for holding limma obj
+ 
   
 
   observeEvent(input$fileSubmitter, {
@@ -31,6 +44,9 @@ shinyServer(function(input, output) {
     #Read ilmn just like mom used to do.
     readTargets(file = "0", path = targetPath)
     x <- read.ilmn("0" , "0", path = probePath, ctrlpath = controlPath)
+    summary(x)
+    str(x)
+    changeX(x)
     
     output$uploadResult <- renderImage({
       return(list(
@@ -42,7 +58,15 @@ shinyServer(function(input, output) {
     
   })
   
-  
+  observeEvent(input$preprocessingSubmitter, {
+    x <- getX()
+    str(x)
+    summary(x)
+    
+    expressed <- rowSums(x$other$Detection < input$filteringSelection) >= 3
+    y <- x[expressed,]
+    
+  })
   
   
 
