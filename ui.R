@@ -41,16 +41,17 @@ shinyUI(navbarPage("Shiny-Limma!",
                                 p("Version 0.1 of shiny-Limma accepts only Illumina Probe Data")
                               ),
                               
-  
+                              
                               mainPanel(
                                 #Button that reads in files and attempts to run ilmn
                                 actionButton("fileSubmitter", "Submit files!"),
-                                
+                      
                                 plotOutput("rawPlot")
                               )
-                          )
+                            )
                    ),
                    tabPanel("Preprocessing",
+                          sidebarLayout(
                               sidebarPanel(
                                 
                                 p("Select your preprocessing options here!"),
@@ -80,23 +81,24 @@ shinyUI(navbarPage("Shiny-Limma!",
                                 
                                 
                                 actionButton("preprocessingSubmitter", "Preprocess my data!")
+                              ),
+                              
+                              mainPanel(
+                                h3("Before Preprocessing"),
+                                
+                                plotOutput("rawPlot2"),
+                                
+                                
+                                h3("After Preprocessing"),
+                                
+                                plotOutput("preprocessingPlot")
+                                
                               )
-                            
-                            #mainPanel(
-                             # h3("Before Preprocessing"),
-                              
-                              #plotOutput("rawPlot"),
-                              
-                              
-                              #h3("After Preprocessing"),
-                              
-                            #  plotOutput("preprocessingPlot")
-                              
-                            #)
+                            )
                    ),
-                            
-                            
-                        
+                   
+                   
+                   
                    tabPanel("Contrast Matrix",
                             verbatimTextOutput("Put contrast stuff here somewhere.")
                             
