@@ -2,7 +2,7 @@ library(shiny)
 
 #Define UI for Application Designed as a Limma workflow
 
-shinyUI(navbarPage("Shinny-Limma!",
+shinyUI(navbarPage("Shiny-Limma!",
                    tabPanel("Choose Dataset",
                             sidebarLayout(
                               sidebarPanel(
@@ -46,43 +46,55 @@ shinyUI(navbarPage("Shinny-Limma!",
                                 #Button that reads in files and attempts to run ilmn
                                 actionButton("fileSubmitter", "Submit files!"),
                                 
-                                imageOutput("uploadResult")
-                                
+                                plotOutput("rawPlot")
                               )
                             )
+                            
                    ),
                    tabPanel("Preprocessing",
-                            sidebarPanel(
+                              sidebarPanel(
+                                
+                                p("Select your preprocessing options here!"),
+                                
+                                br(),
+                                br(),
+                                strong("Background correction?"),
+                                
+                                checkboxInput("backgroundCheckbox", label = "Yes, I want background correction.", value = FALSE),
+                                
+                                br(),
+                                br(),
+                                
+                                selectInput("normalizationSelection", label = "Choose desired normalization technique...",
+                                            choices = list("No normalization..." = 1, "Variance Stabilization Transform" = 2, "Log Quantile" = 3, "Cyclic Loess" = 4),
+                                            selected = 1),
+                                
+                                br(),
+                                br(),
+                                
+                                selectInput("filteringSelection", label = "Choose desired filtering level for probes...",
+                                            choices = list("No filtering..." = 1, "Exploratory (10%)" = 0.10, "Standard (5%)" = 0.05, "Conservative (1%)" = 0.01),
+                                            selected = 1),
+                                
+                                br(),
+                                br(),
+                                
+                                
+                                actionButton("preprocessingSubmitter", "Preprocess my data!")
+                              ),
+                            
+                            mainPanel(
+                              h3("Before Preprocessing"),
                               
-                              p("Select your preprocessing options here!"),
-                              
-                              br(),
-                              br(),
-                              strong("Background correction?"),
-                              
-                              checkboxInput("backgroundCheckbox", label = "Yes, I want background correction.", value = FALSE),
-                              
-                              br(),
-                              br(),
-                              
-                              selectInput("normalizationSelection", label = "Choose desired normalization technique...",
-                                          choices = list("No normalization..." = 1, "Variance Stabilization Transform" = 2, "Log Quantile" = 3),
-                                          selected = 3),
-                              
-                              br(),
-                              br(),
-                              
-                              selectInput("filteringSelection", label = "Choose desired filtering level for probes...",
-                                          choices = list("No filtering..." = 1, "Exploratory (10%)" = 0.10, "Standard (5%)" = 0.05, "Conservative (1%)" = 0.01),
-                                          selected = 3),
-                              
-                              br(),
-                              br(),
+                              plotOutput("rawPlot"),
                               
                               
-                              actionButton("preprocessingSubmitter", "Preprocess my data!")
+                              h3("After Preprocessing"),
+                              
+                              plotOutput("preprocessingPlot")
                               
                             )
+                            
                             
                             
                    ),                   
@@ -93,9 +105,6 @@ shinyUI(navbarPage("Shinny-Limma!",
                    
                    tabPanel("Analysis",
                             verbatimTextOutput("Put Analysis stuff here somewhere.")
-                            
-                            
-                            
                             
                    ),
                    

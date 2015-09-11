@@ -1,6 +1,8 @@
 library(shiny)
 library(limma)
 library(png)
+library(vsn)
+library(ggplot2)
 #Define server logic required to print whether dataset was uploaded
 # setting this option. Here we'll raise limit to 130MB.
 options(shiny.maxRequestSize = 130*1024^2)
@@ -13,6 +15,27 @@ getX <- function(){
 
 changeX<- function (y){
   x <<- y
+}
+
+normalization <- function(data, style){
+  if (style == 1){
+    return (data)
+  }
+  else if (style == 2){
+    newData = normalizeVSN(data)
+    return (newData)
+  }
+  else if (style == 3){
+    newData = neqc(data)
+    return (newData)
+  }
+  else if (style == 4){
+    newData = normalizeBetweenArrays(data, method = "cyclicloess", cyclic.method = "fast")
+    return (newData)
+  }else{
+    #Shouldn't ever reach this case. 
+    return(-1)
+  }
 }
 
 shinyServer(function(input, output) {
@@ -44,28 +67,30 @@ shinyServer(function(input, output) {
     #Read ilmn just like mom used to do.
     readTargets(file = "0", path = targetPath)
     x <- read.ilmn("0" , "0", path = probePath, ctrlpath = controlPath)
-    summary(x)
-    str(x)
     changeX(x)
     
-    output$uploadResult <- renderImage({
-      return(list(
-        src = "images/Go_check.png",
-        contentType = "image/png",
-        alt = "Your file was uploaded. Move on to preprocessing!"
-      ))
-    }, deleteFile = FALSE)
     
+    output$rawPlot <- renderPlot({
+      boxplot(log2(x$E),range=0,ylab="log2 intensity")
+      #toPlot <- x$e
+      #d <- ggplot(data= toPlot)
+      #d <- d + geom_bar(stat = "identity", width = .5)
+      #d
+    
+  })
   })
   
   observeEvent(input$preprocessingSubmitter, {
     x <- getX()
-    str(x)
-    summary(x)
-    
+    if(input$backgroundCheckbox){
+      x <-backgroundCorrect(x)
+      cat("\nBackground Correct Happened\n")
+    }
+    x <- normalization(x, input$normalizationSelection)
     expressed <- rowSums(x$other$Detection < input$filteringSelection) >= 3
-    y <- x[expressed,]
-    
+    x<- x[expressed,]
+    changeX(x)
+  
   })
   
   
