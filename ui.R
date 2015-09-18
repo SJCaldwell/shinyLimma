@@ -50,6 +50,27 @@ shinyUI(navbarPage("Shiny-Limma!",
                               )
                             )
                    ),
+                   tabPanel("Explore",
+                            sidebarLayout(
+                              
+                              sidebarPanel(
+                                strong("Explore"),
+                                tags$hr(),
+                                p("This is your data. You have to explore it.")
+                                
+                                
+                                
+                                
+                              ),
+                              
+                              mainPanel()
+                            )
+                            
+                    ),
+                   
+                   
+                   
+                   
                    tabPanel("Preprocessing",
                           sidebarLayout(
                               sidebarPanel(
@@ -73,8 +94,14 @@ shinyUI(navbarPage("Shiny-Limma!",
                                 br(),
                                 
                                 selectInput("filteringSelection", label = "Choose desired filtering level for probes...",
-                                            choices = list("No filtering..." = 1, "Exploratory (10%)" = 0.10, "Standard (5%)" = 0.05, "Conservative (1%)" = 0.01),
+                                            choices = list("No filtering..." = 1, "Exploratory (10%)" = 0.10, "Standard (5%)" = 0.05, "Conservative (1%)" = 0.01, "Choose my own value" = 4),
                                             selected = 1),
+                                
+                                conditionalPanel(
+                                  condition = "input.filteringSelection == 4",
+                                  sliderInput("filterSlider", "Select your own percentage:",
+                                              min = 0, max = 100, value = 5)
+                                ),
                                 
                                 br(),
                                 br(),
@@ -84,17 +111,17 @@ shinyUI(navbarPage("Shiny-Limma!",
                               ),
                               
                               mainPanel(
-                                h3("Before Preprocessing"),
+                                h4("Before Preprocessing"),
                                 
                                 plotOutput("rawPlot2"),
                                 
                                 
-                                h3("After Preprocessing"),
+                                h4("After Preprocessing"),
                                 
                                 plotOutput("preprocessingPlot")
                                 
                               )
-                            )
+                          )
                    ),
                    
                    

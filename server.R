@@ -13,8 +13,18 @@ getX <- function(){
   return(x)
 }
 
-changeX<- function (y){
+changeX<- function(y){
   x <<- y
+}
+
+y <- NULL
+
+getY <- function(){
+  return(y)
+}
+
+changeY <- function(x){
+  y <<- x
 }
 
 normalization <- function(data, style){
@@ -78,6 +88,15 @@ shinyServer(function(input, output) {
       #d
     
   })
+    
+    output$rawPlot2 <- renderPlot({
+      boxplot(log2(x$E),range=0,ylab="log2 intensity")
+      #toPlot <- x$e
+      #d <- ggplot(data= toPlot)
+      #d <- d + geom_bar(stat = "identity", width = .5)
+      #d
+      
+    })
   })
   
   observeEvent(input$preprocessingSubmitter, {
@@ -87,9 +106,27 @@ shinyServer(function(input, output) {
       cat("\nBackground Correct Happened\n")
     }
     x <- normalization(x, input$normalizationSelection)
-    expressed <- rowSums(x$other$Detection < input$filteringSelection) >= 3
+    if(input$filteringSelection == 4){
+    expressed <- rowSums(x$other$Detection < input$filterSlider) >= round(ncol(x)/4)
+      
+    }else{
+    expressed <- rowSums(x$other$Detection < input$filteringSelection) >= round(ncol(x)/4)
+    }
     x<- x[expressed,]
-    changeX(x)
+    changeY(x)
+    y <- getY()
+    
+    output$preprocessingPlot <- renderPlot({
+      boxplot(log2(y$E),range=0,ylab="log2 intensity")
+      cat("\nPlot updated!\n")
+      #toPlot <- x$e
+      #d <- ggplot(data= toPlot)
+      #d <- d + geom_bar(stat = "identity", width = .5)
+      #d
+      
+    })
+    cat("\nDone_Deal_Broski\n")
+    
   
   })
   
