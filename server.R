@@ -125,9 +125,7 @@ shinyServer(function(input, output) {
       #d
       
     })
-    cat("\nDone_Deal_Broski\n")
-    
-  
+
   })
   
   
