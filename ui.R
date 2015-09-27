@@ -58,9 +58,6 @@ shinyUI(navbarPage("Shiny-Limma!",
                                 tags$hr(),
                                 p("This is your data. You have to explore it.")
                                 
-                                
-                                
-                                
                               ),
                               
                               mainPanel()

@@ -3,6 +3,7 @@ library(limma)
 library(png)
 library(vsn)
 library(ggplot2)
+source("data_shinyLimma/ggplotBoxPlotForArrays.r")
 #Define server logic required to print whether dataset was uploaded
 # setting this option. Here we'll raise limit to 130MB.
 options(shiny.maxRequestSize = 130*1024^2)
@@ -81,11 +82,9 @@ shinyServer(function(input, output) {
     
     
     output$rawPlot <- renderPlot({
-      boxplot(log2(x$E),range=0,ylab="log2 intensity")
-      #toPlot <- x$e
-      #d <- ggplot(data= toPlot)
-      #d <- d + geom_bar(stat = "identity", width = .5)
-      #d
+      #boxplot(log2(x$E),range=0,ylab="log2 intensity")
+      plot <- densityPlotter(x)
+      plot
     
   })
     
