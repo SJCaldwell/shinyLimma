@@ -56,8 +56,31 @@ shinyUI(navbarPage("Shiny-Limma!",
                               
                               sidebarPanel(
                                 strong("Explore"),
-                                tags$hr(),
-                                p("This is your data. You have to explore it.")
+                                br(),
+                                p("This is your data. Visualizing it will help you understand
+                                  it and make better preprocessing decisions."),
+                                br(),
+                                br(),
+                                
+                                selectInput("exploreSelection", label = "Desired Data Visualization",
+                                            choices = list("Heatmap" = 1, "Boxplot" = 2),
+                                            selected = 1),
+                                br(),
+                                br(),
+                                
+                                strong("Array Quality Report"),
+                                br(),
+                                actionButton("QCGenerator","Generate Report"),
+                                
+                                br(),
+                                br(),
+                                
+                                
+                                p("ArrayQC reports cover a gambit of quality 
+                                  control reports for arrays. This will open a new tab upon completion,
+                                  but could take a little while to run."),
+                                
+                                br()
                                 
                               ),
                               
