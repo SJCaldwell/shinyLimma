@@ -43,6 +43,7 @@ shinyUI(navbarPage("Shiny-Limma!",
                               
                               
                               mainPanel(
+                                tags$style(type="text/css", "body { overflow-y: scroll; }"),
                                 #Button that reads in files and attempts to run ilmn
                                 actionButton("fileSubmitter", "Submit files!"),
                       

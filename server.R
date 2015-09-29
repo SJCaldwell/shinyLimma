@@ -82,8 +82,11 @@ shinyServer(function(input, output) {
     
     
     output$rawPlot <- renderPlot({
-      #boxplot(log2(x$E),range=0,ylab="log2 intensity")
+      progress <- shiny::Progress$new()
+      on.exit(progress$close())
+      progress$set(message = "Loading data... this may take a while...", value = 0.3)
       plot <- densityPlotter(x)
+      progress$set(message = "Almost done!", value = 1.0)
       plot
     
   })

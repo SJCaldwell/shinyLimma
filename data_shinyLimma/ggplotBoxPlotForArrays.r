@@ -22,7 +22,6 @@ library(reshape)
 ###Rough draft? 
 
 densityPlotter <- function(rawLimma){
-  
   y <- melt(rawLimma$E)
   p2 <- ggplot(y, aes(x = value)) + geom_density( aes(group = X2, colour = X2), adjust=10) + xlim(0, 500)
   return (p2)
