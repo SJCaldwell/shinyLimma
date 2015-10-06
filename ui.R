@@ -80,6 +80,12 @@ shinyUI(navbarPage("Shiny-Limma!",
                                   control reports for arrays. This will open a new tab upon completion,
                                   but could take a little while to run."),
                                 
+                                
+                     #           conditionalPanel(
+                                  #condition = "getDownload()== TRUE",
+                                  #strong("YOUR DOWNLOAD IS RDY AF NOW")
+                     
+                    #            ),
                                 br()
                                 
                               ),

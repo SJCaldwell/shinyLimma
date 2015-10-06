@@ -3,12 +3,33 @@ library(limma)
 library(png)
 library(vsn)
 library(ggplot2)
+source("arrayQCRunner.r")
 source("data_shinyLimma/ggplotBoxPlotForArrays.r")
+
+#rm(list=ls(all=TRUE))
 #Define server logic required to print whether dataset was uploaded
 # setting this option. Here we'll raise limit to 130MB.
 options(shiny.maxRequestSize = 130*1024^2)
 
 x <- NULL 
+probePath <- NULL
+download <- FALSE
+
+changeDownload <- function(){
+  download <<- TRUE
+}
+
+getProbePath <- function(){
+  return (probePath)
+}
+
+changeDownload <- function(){
+  download <<- TRUE
+}
+
+changeProbePath <- function(path){
+  probePath <<- path
+}
 
 getX <- function(){
   return(x)
@@ -61,14 +82,13 @@ shinyServer(function(input, output) {
   
 
   observeEvent(input$fileSubmitter, {
-    
-    
     #Capture control probe information from input
     probeFile = input$probeFile
     controlFile = input$controlProbeFile
     targetFile = input$targets
     #Save path names for manipulation
     probePath = probeFile$datapath
+    changeProbePath(probePath)
     controlPath = controlFile$datapath
     targetPath = targetFile$datapath
     #Prep path names that will be used by Limma.
@@ -131,7 +151,10 @@ shinyServer(function(input, output) {
   })
   
   
+  observeEvent(input$QCGenerator, {
+    QC_Reporter(probePath)
+    changeDownload()
+  })
 
   
-
 })
