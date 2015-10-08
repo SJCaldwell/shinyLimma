@@ -5,6 +5,7 @@ library(vsn)
 library(ggplot2)
 source("arrayQCRunner.r")
 source("data_shinyLimma/ggplotBoxPlotForArrays.r")
+source("global.R", local = FALSE)
 
 #rm(list=ls(all=TRUE))
 #Define server logic required to print whether dataset was uploaded
@@ -13,19 +14,11 @@ options(shiny.maxRequestSize = 130*1024^2)
 
 x <- NULL 
 probePath <- NULL
-download <- FALSE
-
-changeDownload <- function(){
-  download <<- TRUE
-}
 
 getProbePath <- function(){
   return (probePath)
 }
 
-changeDownload <- function(){
-  download <<- TRUE
-}
 
 changeProbePath <- function(path){
   probePath <<- path

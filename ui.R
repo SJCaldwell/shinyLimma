@@ -81,11 +81,11 @@ shinyUI(navbarPage("Shiny-Limma!",
                                   but could take a little while to run."),
                                 
                                 
-                     #           conditionalPanel(
-                                  #condition = "getDownload()== TRUE",
-                                  #strong("YOUR DOWNLOAD IS RDY AF NOW")
+                                conditionalPanel(
+                                  condition = "download",
+                                  strong("YOUR DOWNLOAD IS RDY AF NOW")
                      
-                    #            ),
+                                ),
                                 br()
                                 
                               ),
