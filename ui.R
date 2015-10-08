@@ -1,6 +1,7 @@
 library(shiny)
 
 #Define UI for Application Designed as a Limma workflow
+download <- getDownload()
 
 shinyUI(navbarPage("Shiny-Limma!",
                    tabPanel("Choose Dataset",
@@ -82,7 +83,7 @@ shinyUI(navbarPage("Shiny-Limma!",
                                 
                                 
                                 conditionalPanel(
-                                  condition = "download",
+                                  condition = "output.download == true",
                                   strong("YOUR DOWNLOAD IS RDY AF NOW")
                      
                                 ),

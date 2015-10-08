@@ -1,4 +1,4 @@
-download <- FALSE
+download <<- FALSE
 
 changeDownload <- function(){
   download <<- TRUE
@@ -7,3 +7,5 @@ changeDownload <- function(){
 getDownload <- function(){
   return (download)
 }
+
+closeAllConnections()

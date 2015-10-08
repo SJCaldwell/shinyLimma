@@ -1,67 +1,20 @@
+#closeAllConnections()
+#rm(list=ls())
 library(shiny)
 library(limma)
 library(png)
 library(vsn)
 library(ggplot2)
 source("arrayQCRunner.r")
-source("data_shinyLimma/ggplotBoxPlotForArrays.r")
 source("global.R", local = FALSE)
+source("data_shinyLimma/ggplotBoxPlotForArrays.r")
 
 #rm(list=ls(all=TRUE))
 #Define server logic required to print whether dataset was uploaded
 # setting this option. Here we'll raise limit to 130MB.
 options(shiny.maxRequestSize = 130*1024^2)
 
-x <- NULL 
-probePath <- NULL
 
-getProbePath <- function(){
-  return (probePath)
-}
-
-
-changeProbePath <- function(path){
-  probePath <<- path
-}
-
-getX <- function(){
-  return(x)
-}
-
-changeX<- function(y){
-  x <<- y
-}
-
-y <- NULL
-
-getY <- function(){
-  return(y)
-}
-
-changeY <- function(x){
-  y <<- x
-}
-
-normalization <- function(data, style){
-  if (style == 1){
-    return (data)
-  }
-  else if (style == 2){
-    newData = normalizeVSN(data)
-    return (newData)
-  }
-  else if (style == 3){
-    newData = neqc(data)
-    return (newData)
-  }
-  else if (style == 4){
-    newData = normalizeBetweenArrays(data, method = "cyclicloess", cyclic.method = "fast")
-    return (newData)
-  }else{
-    #Shouldn't ever reach this case. 
-    return(-1)
-  }
-}
 
 shinyServer(function(input, output) {
     # input$file1 will be NULL initially. After the user selects
@@ -71,6 +24,56 @@ shinyServer(function(input, output) {
     # be found.
   
   #Define a global variable for holding limma obj
+  x <- NULL 
+  probePath <- NULL
+  
+  getProbePath <- function(){
+    return (probePath)
+  }
+  
+  
+  changeProbePath <- function(path){
+    probePath <<- path
+  }
+  
+  getX <- function(){
+    return(x)
+  }
+  
+  changeX<- function(y){
+    x <<- y
+  }
+  
+  y <- NULL
+  
+  getY <- function(){
+    return(y)
+  }
+  
+  changeY <- function(x){
+    y <<- x
+  }
+  
+  normalization <- function(data, style){
+    if (style == 1){
+      return (data)
+    }
+    else if (style == 2){
+      newData = normalizeVSN(data)
+      return (newData)
+    }
+    else if (style == 3){
+      newData = neqc(data)
+      return (newData)
+    }
+    else if (style == 4){
+      newData = normalizeBetweenArrays(data, method = "cyclicloess", cyclic.method = "fast")
+      return (newData)
+    }else{
+      #Shouldn't ever reach this case. 
+      return(-1)
+    }
+  }
  
   
 
@@ -147,6 +150,7 @@ shinyServer(function(input, output) {
   observeEvent(input$QCGenerator, {
     QC_Reporter(probePath)
     changeDownload()
+    cat(download)
   })
 
   

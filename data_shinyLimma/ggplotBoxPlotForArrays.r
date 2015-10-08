@@ -3,8 +3,8 @@
 library(ggplot2)
 library(limma)
 library(reshape)
-setwd("C://Users//jimc//Desktop//ShinyLimmaWorkspace//data_shinyLimma")
-x <- read.ilmn(files = "LRawReport.txt", ctrlfiles = "ControlProbelimma.txt" )
+#setwd("C://Users//jimc//Desktop//ShinyLimmaWorkspace//data_shinyLimma")
+#x <- read.ilmn(files = "LRawReport.txt", ctrlfiles = "ControlProbelimma.txt" )
 #newData = normalizeBetweenArrays(x, method = "cyclicloess", cyclic.method = "fast")
 
 #y <- (melt(x$E))
@@ -25,7 +25,7 @@ x <- read.ilmn(files = "LRawReport.txt", ctrlfiles = "ControlProbelimma.txt" )
 
 densityPlotter <- function(rawLimma){
   y <- melt(rawLimma$E)
-  p2 <- ggplot(y, aes(x = value)) + geom_density( aes(group = X2, colour = X2), adjust=10) + xlim(0, 50)
+  p2 <- ggplot(y, aes(x = value)) + geom_density( aes(group = X2, colour = X2), adjust=10) + xlim(0, 300)
   p2 <- p2 + labs(title = "Density of Probe Values")
   p2 <- p2 + labs(x = "Probes", y = "Density")
   p2 <- p2 + theme(legend.position= "none") + theme(plot.title = element_text(size = rel(1.3)))
