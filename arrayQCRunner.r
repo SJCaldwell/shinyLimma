@@ -1,5 +1,5 @@
-library(arrayQualityMetrics)
-library(lumi)
+#library(arrayQualityMetrics)
+#library(lumi)
 #setwd("C://Users//jimc//Desktop//ShinyLimmaWorkspace//data_shinyLimma")
 
 QC_Reporter <- function(path){

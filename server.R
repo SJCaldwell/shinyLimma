@@ -6,8 +6,10 @@ library(png)
 library(vsn)
 library(ggplot2)
 source("arrayQCRunner.r")
+source("helper.R")
 source("global.R", local = FALSE)
 source("data_shinyLimma/ggplotBoxPlotForArrays.r")
+source("data_shinyLimma/HeatmapRunner.r")
 
 #rm(list=ls(all=TRUE))
 #Define server logic required to print whether dataset was uploaded
@@ -70,12 +72,9 @@ shinyServer(function(input, output) {
       newData = normalizeBetweenArrays(data, method = "cyclicloess", cyclic.method = "fast")
       return (newData)
     }else{
-      #Shouldn't ever reach this case. 
       return(-1)
     }
   }
- 
-  
 
   observeEvent(input$fileSubmitter, {
     #Capture control probe information from input
@@ -92,10 +91,10 @@ shinyServer(function(input, output) {
     controlPath = substr(controlPath, 1, nchar(controlPath)-2)
     targetPath = substr(targetPath, 1, nchar(targetPath)-2)
     #Read ilmn just like mom used to do.
-    readTargets(file = "0", path = targetPath)
+    target <- readTargets(file = "0", path = targetPath)
     x <- read.ilmn("0" , "0", path = probePath, ctrlpath = controlPath)
     changeX(x)
-    
+    changeTargets(target)
     
     output$rawPlot <- renderPlot({
       progress <- shiny::Progress$new()
@@ -106,6 +105,37 @@ shinyServer(function(input, output) {
       plot
     
   })
+    
+    output$exploratoryText <- renderText({
+      
+      if (input$exploreSelection == 1){
+        paste("Choose the exploratory analysis technique")
+      }
+      
+      else if (input$exploreSelection == 2){
+        paste("Displaying Heatmap of Raw Data")
+      }
+      
+      else if(input$exploreSelection == 3){
+        paste("Displaying boxplot of Raw Data")
+      }
+      
+    })
+    
+    output$exploratoryPlot <- renderPlot({
+      
+      plot <- getExploratoryPlot(input$exploreSelection, getX())
+      if (isnt.null(plot)){
+        plot
+      }
+      })
+    
+    
+    observeEvent(input$QCGenerator, {
+      QC_Reporter(probePath)
+      changeDownload()
+      cat(download)
+    })
     
     output$rawPlot2 <- renderPlot({
       boxplot(log2(x$E),range=0,ylab="log2 intensity")
@@ -137,21 +167,13 @@ shinyServer(function(input, output) {
     output$preprocessingPlot <- renderPlot({
       boxplot(log2(y$E),range=0,ylab="log2 intensity")
       cat("\nPlot updated!\n")
-      #toPlot <- x$e
-      #d <- ggplot(data= toPlot)
-      #d <- d + geom_bar(stat = "identity", width = .5)
-      #d
+    + geom_bar(stat = "identity", width = .5)
       
     })
 
   })
   
-  
-  observeEvent(input$QCGenerator, {
-    QC_Reporter(probePath)
-    changeDownload()
-    cat(download)
-  })
+
 
   
 })

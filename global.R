@@ -8,4 +8,12 @@ getDownload <- function(){
   return (download)
 }
 
-closeAllConnections()
+targets <- NULL
+
+changeTargets <- function(t){
+	targets <<- t
+}
+
+getTargets <- function(){
+    return (targets)
+  }

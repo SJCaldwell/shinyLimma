@@ -64,7 +64,7 @@ shinyUI(navbarPage("Shiny-Limma!",
                                 br(),
                                 
                                 selectInput("exploreSelection", label = "Desired Data Visualization",
-                                            choices = list("Heatmap" = 1, "Boxplot" = 2),
+                                            choices = list("Choose your technique..." = 1, "Heatmap" = 2, "Boxplot" = 3),
                                             selected = 1),
                                 br(),
                                 br(),
@@ -91,7 +91,12 @@ shinyUI(navbarPage("Shiny-Limma!",
                                 
                               ),
                               
-                              mainPanel()
+                              mainPanel(
+                                
+                                textOutput("exploratoryText"),
+                                
+                                plotOutput("exploratoryPlot")
+                              )
                             )
                             
                     ),
