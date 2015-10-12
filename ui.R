@@ -165,13 +165,44 @@ shinyUI(navbarPage("Shiny-Limma!",
                    ),
                    
                    tabPanel("Analysis",
-                            verbatimTextOutput("Put Analysis stuff here somewhere.")
-                            
-                   ),
-                   
+                            sidebarLayout(
+                              sidebarPanel(
+                                
+                                p("Read through the results of your analysis here!"),
+                                
+                                br(),
+                                br(),
+                                
+                                actionButton("analysisSubmitter", "Run my Linear Model!")
+                              ),
+                              
+                              mainPanel(
+                                h4("Analysis Results")
+                                
+            
+                                
+                              )
+                   )),
                    tabPanel("Export Reports",
-                            verbatimTextOutput("Put reports stuff here somewhere.")
-                            
+                            sidebarLayout(
+                              sidebarPanel(
+                                
+                                p("Export your results here!"),
+                                
+                                br(),
+                                br(),
+                                
+                                actionButton("reportSubmitter", "Download my Report!")
+                              ),
+                              
+                              mainPanel(
+                                h4("Options")
+                                
+                                
+                                
+                              )
+                            )
+
                             
                    )
 ))
