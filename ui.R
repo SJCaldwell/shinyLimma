@@ -4,6 +4,11 @@ library(shiny)
 download <- getDownload()
 
 shinyUI(navbarPage("Shiny-Limma!",
+                   ################################################################
+                   
+                   #### CLIENT-SIDE code for CHOOSE DATASET section HERE####
+                   
+                   ###############################################################
                    tabPanel("Choose Dataset",
                             sidebarLayout(
                               sidebarPanel(
@@ -52,6 +57,11 @@ shinyUI(navbarPage("Shiny-Limma!",
                               )
                             )
                    ),
+                   ################################################################
+                   
+                   #### CLIENT-SIDE code for EXPLORE section HERE####
+                   
+                   ###############################################################
                    tabPanel("Explore",
                             sidebarLayout(
                               
@@ -101,9 +111,11 @@ shinyUI(navbarPage("Shiny-Limma!",
                             
                     ),
                    
+                   ################################################################
                    
+                   #### CLIENT-SIDE code for PREPROCESSING section HERE####
                    
-                   
+                   ###############################################################
                    tabPanel("Preprocessing",
                           sidebarLayout(
                               sidebarPanel(
@@ -157,15 +169,52 @@ shinyUI(navbarPage("Shiny-Limma!",
                           )
                    ),
                    
+                   ################################################################
                    
+                   #### CLIENT-SIDE code for CONTRAST MATRIX section HERE####
+                   
+                   ###############################################################
                    
                    tabPanel("Contrast Matrix",
-                            verbatimTextOutput("Put contrast stuff here somewhere.")
-                            
+                            sidebarLayout(
+                              sidebarPanel(
+                                
+                                p("Read through the results of your analysis here!"),
+                                
+                                br(),
+                                br(),
+                                textInput("group1Comtrast", "Group1"),
+                                br(),
+                                strong("VS"),
+                                br(),
+                                br(),
+                                br(),
+                                textInput("group2Contrast", "Group2"),
+                                br(),
+                                br(),
+                                actionButton("contrastSubmitter", "Contrast matrix is done"),
+                                br(),
+                                br()
+                                
+                              ),
+                              
+                              mainPanel(
+                                h4("Specification of Contrast Matrix")
+                                
+                                
+                                
+                              )
+                            )
                    ),
                    
+                   ################################################################
+                   
+                   #### CLIENT-SIDE code for ANALYSIS section HERE####
+                   
+                   ###############################################################
+                   
                    tabPanel("Analysis",
-                            sidebarLayout(
+              sidebarLayout(
                               sidebarPanel(
                                 
                                 p("Read through the results of your analysis here!"),
@@ -182,7 +231,13 @@ shinyUI(navbarPage("Shiny-Limma!",
             
                                 
                               )
-                   )),
+                   )                      ),
+              
+                ################################################################
+              
+                #### CLIENT-SIDE code for EXPORT REPORTS section HERE####
+              
+                ###############################################################
                    tabPanel("Export Reports",
                             sidebarLayout(
                               sidebarPanel(
@@ -198,7 +253,7 @@ shinyUI(navbarPage("Shiny-Limma!",
                               mainPanel(
                                 h4("Options")
                                 
-                                
+                      
                                 
                               )
                             )

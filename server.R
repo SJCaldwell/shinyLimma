@@ -105,6 +105,11 @@ shinyServer(function(input, output) {
       plot
     
   })
+    ################################################################
+    
+          #### SERVER-SIDE code for EXPLORE section HERE####
+    
+    ###############################################################
     
     output$exploratoryText <- renderText({
       
@@ -130,20 +135,18 @@ shinyServer(function(input, output) {
       }
       })
     
-    
     observeEvent(input$QCGenerator, {
       QC_Reporter(probePath)
       changeDownload()
       cat(download)
     })
+    ################################################################
     
+    #### SERVER-SIDE code for PRE-PROCESSING section HERE####
+    
+    ###############################################################
     output$rawPlot2 <- renderPlot({
       boxplot(log2(x$E),range=0,ylab="log2 intensity")
-      #toPlot <- x$e
-      #d <- ggplot(data= toPlot)
-      #d <- d + geom_bar(stat = "identity", width = .5)
-      #d
-      
     })
   })
   
@@ -173,6 +176,11 @@ shinyServer(function(input, output) {
 
   })
   
+  ################################################################
+  
+  #### SERVER-SIDE code for CONTRAST MATRiX section HERE####
+  
+  ###############################################################
 
 
   
