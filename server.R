@@ -193,6 +193,8 @@ shinyServer(function(input, output) {
       
       if (goodSyntax){
         cat("SUCCESS! Feel free to play with this and run good code.")
+        computeMatrix(group1Syntax, group2Syntax, corr = NULL)
+        cat("\nEVERYTHING ACTUALLY WORKED!\n")
       }else{
         cat("Somehow the console should display this is a problem and that the user should try again.")
       }

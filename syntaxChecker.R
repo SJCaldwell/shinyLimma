@@ -17,6 +17,9 @@ cleanSyntax <- function(tag){
 	
 }
 
+#######################TO-DO######################################
+#Use this to make sure both char have the same number of dots i.e. same splitting
+#######################TO-DO######################################
 countCharOccurrences <- function(char, s) {
     s2 <- gsub(char,"",s)
     return (nchar(s) - nchar(s2))
