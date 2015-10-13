@@ -1,5 +1,4 @@
 
-isnt.null <- function(x) !is.null(x)
 
 getExploratoryPlot <- function(input, x){
 

@@ -7,6 +7,7 @@ library(vsn)
 library(ggplot2)
 source("arrayQCRunner.r")
 source("helper.R")
+source("syntaxChecker.R")
 source("global.R", local = FALSE)
 source("data_shinyLimma/ggplotBoxPlotForArrays.r")
 source("data_shinyLimma/HeatmapRunner.r")
@@ -95,6 +96,9 @@ shinyServer(function(input, output) {
     x <- read.ilmn("0" , "0", path = probePath, ctrlpath = controlPath)
     changeX(x)
     changeTargets(target)
+    valid <- calculateValidGroups(getTargets())
+    changeValidGroups(valid)
+    
     
     output$rawPlot <- renderPlot({
       progress <- shiny::Progress$new()
@@ -181,7 +185,27 @@ shinyServer(function(input, output) {
   #### SERVER-SIDE code for CONTRAST MATRiX section HERE####
   
   ###############################################################
-
+  
+  observeEvent(input$contrastSubmitter, {
+      group1Syntax <- input$group1Contrast
+      group2Syntax <- input$group2Contrast
+      goodSyntax <- CMSyntaxChecker(group1Syntax, group2Syntax)
+      
+      if (goodSyntax){
+        cat("SUCCESS! Feel free to play with this and run good code.")
+      }else{
+        cat("Somehow the console should display this is a problem and that the user should try again.")
+      }
+  })
+  
+    output$targetsTable <- renderDataTable({
+    toDisplay <- getTargets()
+    if(isnt.null(toDisplay)){
+      toDisplay <- as.data.frame(toDisplay)
+      toDisplay
+    }
+    })
+  
 
   
 })

@@ -183,7 +183,7 @@ shinyUI(navbarPage("Shiny-Limma!",
                                 
                                 br(),
                                 br(),
-                                textInput("group1Comtrast", "Group1"),
+                                textInput("group1Contrast", "Group1"),
                                 br(),
                                 strong("VS"),
                                 br(),
@@ -199,7 +199,8 @@ shinyUI(navbarPage("Shiny-Limma!",
                               ),
                               
                               mainPanel(
-                                h4("Specification of Contrast Matrix")
+                                h4("Specification of Contrast Matrix"),
+                                dataTableOutput("targetsTable")
                                 
                                 
                                 
