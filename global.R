@@ -60,3 +60,25 @@ computeMatrix <- function(group1, group2, correlationFix){
   }
   exp_design <- model.matrix(~0+exp_types)
 }
+
+getTutorial <- function(){
+  return (tutorial)
+}
+
+tutorial <- '<!DOCTYPE html>
+<html>
+<body>
+
+<h1> My First Heading </h1>
+<h2> This is a smaller heading </h2>
+<h3> This heading is smaller yet! </h3>
+
+
+<p> My first paragraph. </p>
+<p>Another paragraph! </p>
+
+<a href = "http://www.google.com"> Click here to learn a bunch<a/>
+
+</body>
+</html>
+'

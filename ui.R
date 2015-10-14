@@ -2,9 +2,7 @@ library(shiny)
 library(shinyBS)
 
 #Define UI for Application Designed as a Limma workflow
-download <- getDownload()
-
-shinyUI(bootstrapPage(navbarPage("Shiny-Limma!",
+shinyUI(fluidPage(navbarPage("Shiny-Limma!",
                    ################################################################
                    
                    #### CLIENT-SIDE code for CHOOSE DATASET section HERE####
@@ -55,8 +53,8 @@ shinyUI(bootstrapPage(navbarPage("Shiny-Limma!",
                                 actionButton("fileSubmitter", "Submit files!"),
                       
                                 plotOutput("rawPlot")
-                              )
-                            )
+                                       )
+                               )
                    ),
                    ################################################################
                    
@@ -179,10 +177,6 @@ shinyUI(bootstrapPage(navbarPage("Shiny-Limma!",
                    tabPanel("Contrast Matrix",
                             sidebarLayout(
                               sidebarPanel(
-                                includeCSS("C:/Users/jimc/Desktop/ShinyLimmaWorkspace/www/css/jquery-ui.css"),  
-                                includeScript("C:/Users/jimc/Desktop/ShinyLimmaWorkspace/www/js/jquery.js"),
-                                includeScript("C:/Users/jimc/Desktop/ShinyLimmaWorkspace/www/js/script.js"),
-                                
                                 p("Read through the results of your analysis here!"),
                                 
                                 br(),
@@ -199,19 +193,14 @@ shinyUI(bootstrapPage(navbarPage("Shiny-Limma!",
                                 actionButton("contrastSubmitter", "Contrast matrix is done"),
                                 br(),
                                 br(),
-                                actionLink("contrastInfo","How do I specify a contrast matrix?"),
-                                bsModal("modalExample", "What's a contrast matrix?", "contrastInfo", size = "large", h4("Analysis Results")
-                                )
-
+                                actionLink("contrastInfo","How do I specify a contrast matrix?")
+                                
                               ),
                               
                               mainPanel(
                                 h4("Specification of Contrast Matrix"),
                                 dataTableOutput("targetsTable")
-                                
-                                
-                                
-                              )
+                                       )
                             )
                    ),
                    
@@ -236,10 +225,9 @@ shinyUI(bootstrapPage(navbarPage("Shiny-Limma!",
                               mainPanel(
                                 h4("Analysis Results")
                                 
-            
-                                
                               )
-                   )                      ),
+                   )                      
+              ),
               
                 ################################################################
               
@@ -256,16 +244,18 @@ shinyUI(bootstrapPage(navbarPage("Shiny-Limma!",
                                 br(),
                                 
                                 actionButton("reportSubmitter", "Download my Report!")
-                              ),
+                                          ),
                               
-                              mainPanel(
-                                h4("Options")
+                                mainPanel(
+                                  h4("Options")
                                 
-                      
-                                
-                              )
-                            )
+                                           )
+                                          )
 
                             
-                   )
-)))
+                          ),
+              ###This works but why the fuck###
+              bsModal("modalExample", "What's a contrast matrix?", "contrastInfo", size = "large",
+                      HTML(getTutorial()))
+        )
+))
