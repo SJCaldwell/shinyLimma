@@ -156,12 +156,8 @@ shinyUI(fluidPage(navbarPage("Shiny-Limma!",
                               
                               mainPanel(
                                 h4("Before Preprocessing"),
-                                
                                 plotOutput("rawPlot2"),
-                                
-                                
                                 h4("After Preprocessing"),
-                                
                                 plotOutput("preprocessingPlot")
                                 
                               )
@@ -254,7 +250,7 @@ shinyUI(fluidPage(navbarPage("Shiny-Limma!",
 
                             
                           ),
-              ###This works but why the fuck###
+              ###This works but why###
               bsModal("modalExample", "What's a contrast matrix?", "contrastInfo", size = "large",
                       HTML(getTutorial()))
         )
