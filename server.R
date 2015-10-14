@@ -1,6 +1,7 @@
 #closeAllConnections()
 #rm(list=ls())
 library(shiny)
+library(shinyBS)
 library(limma)
 library(png)
 library(vsn)
@@ -207,6 +208,11 @@ shinyServer(function(input, output) {
       toDisplay
     }
     })
+    
+
+      
+      
+   
   
 
   

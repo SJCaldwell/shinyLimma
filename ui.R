@@ -1,9 +1,10 @@
 library(shiny)
+library(shinyBS)
 
 #Define UI for Application Designed as a Limma workflow
 download <- getDownload()
 
-shinyUI(navbarPage("Shiny-Limma!",
+shinyUI(bootstrapPage(navbarPage("Shiny-Limma!",
                    ################################################################
                    
                    #### CLIENT-SIDE code for CHOOSE DATASET section HERE####
@@ -178,6 +179,9 @@ shinyUI(navbarPage("Shiny-Limma!",
                    tabPanel("Contrast Matrix",
                             sidebarLayout(
                               sidebarPanel(
+                                includeCSS("C:/Users/jimc/Desktop/ShinyLimmaWorkspace/www/css/jquery-ui.css"),  
+                                includeScript("C:/Users/jimc/Desktop/ShinyLimmaWorkspace/www/js/jquery.js"),
+                                includeScript("C:/Users/jimc/Desktop/ShinyLimmaWorkspace/www/js/script.js"),
                                 
                                 p("Read through the results of your analysis here!"),
                                 
@@ -194,8 +198,11 @@ shinyUI(navbarPage("Shiny-Limma!",
                                 br(),
                                 actionButton("contrastSubmitter", "Contrast matrix is done"),
                                 br(),
-                                br()
-                                
+                                br(),
+                                actionLink("contrastInfo","How do I specify a contrast matrix?"),
+                                bsModal("modalExample", "What's a contrast matrix?", "contrastInfo", size = "large", h4("Analysis Results")
+                                )
+
                               ),
                               
                               mainPanel(
@@ -261,4 +268,4 @@ shinyUI(navbarPage("Shiny-Limma!",
 
                             
                    )
-))
+)))
