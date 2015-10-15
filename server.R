@@ -175,7 +175,6 @@ shinyServer(function(input, output) {
     output$preprocessingPlot <- renderPlot({
       boxplot(log2(y$E),range=0,ylab="log2 intensity")
       cat("\nPlot updated!\n")
-    + geom_bar(stat = "identity", width = .5)
       
     })
 
@@ -195,6 +194,8 @@ shinyServer(function(input, output) {
       if (goodSyntax){
         cat("SUCCESS! Feel free to play with this and run good code.")
         computeMatrix(group1Syntax, group2Syntax, corr = NULL)
+        changeGroup1(group1Syntax)
+        changeGroup2(group2Syntax)
         cat("\nEVERYTHING ACTUALLY WORKED!\n")
       }else{
         cat("Somehow the console should display this is a problem and that the user should try again.")
@@ -209,6 +210,22 @@ shinyServer(function(input, output) {
     }
     })
     
+    ################################################################
+    
+    #### SERVER-SIDE code for ANALYSIS section HERE####
+    
+    ###############################################################
+  observeEvent(input$analysisSubmitter, {
+    fit <- lmFit(getY(), getDesign())
+    toContrast <- getGroup()
+    typeof(toContrast)
+    cont.matrix <- makeContrasts(
+      contrasts = (toContrast),
+      levels = getDesign()
+    )
+    fit2 <- contrasts.fit(fit, cont.matrix)
+    EFit <- eBayes(fit2)
+  })
 
       
       

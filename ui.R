@@ -215,7 +215,22 @@ shinyUI(fluidPage(navbarPage("Shiny-Limma!",
                                 br(),
                                 br(),
                                 
-                                actionButton("analysisSubmitter", "Run my Linear Model!")
+                                actionButton("analysisSubmitter", "Run my Linear Model!"),
+                                br(),
+                                br(),
+                                br(),
+                                br(),
+                                selectInput("analysisSelection", label = "How do you want to look at your results?",
+                                            choices = list("Take your pick!" = 1, "Top Table" = 2, "Venn Diagram" = 3, "Choose a Gene" = 4),
+                                            selected = 1),
+                                
+                                conditionalPanel(
+                                  condition = "input.analysisSelection == 4",
+                                  textInput("genePicker", "Enter your gene's name.")
+                                  
+
+                                  
+                                )
                               ),
                               
                               mainPanel(

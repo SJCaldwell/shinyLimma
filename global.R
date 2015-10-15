@@ -59,10 +59,46 @@ computeMatrix <- function(group1, group2, correlationFix){
     }
   }
   exp_design <- model.matrix(~0+exp_types)
+  colnames(exp_design) = levels(as.factor(exp_types))
+  changeDesign(exp_design) 
+}
+
+design <- NULL
+
+changeDesign <- function(DESIGN){
+  design <<- DESIGN
+}
+
+getDesign <- function(){
+  return (design)
 }
 
 getTutorial <- function(){
   return (tutorial)
+}
+
+Group1 <- NULL
+getGroup1 <- function(){
+  return (Group1)
+}
+
+changeGroup1 <- function(group1){
+  Group1 <<- group1
+}
+
+Group2 <- NULL
+getGroup2 <- function(){
+  return (Group2)
+}
+
+changeGroup2 <- function(group2){
+  Group2 <<- group2
+}
+
+getGroup <- function(){
+  toEval <- (c(getGroup1(), "-", getGroup2()))
+  toEval <- paste(toEval, sep = "", collapse = "")
+  return (toEval)
 }
 
 tutorial <- '<!DOCTYPE html>
