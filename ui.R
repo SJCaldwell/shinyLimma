@@ -234,7 +234,8 @@ shinyUI(fluidPage(navbarPage("Shiny-Limma!",
                               ),
                               
                               mainPanel(
-                                h4("Analysis Results")
+                                h3("Analysis Results"),
+                                dataTableOutput("topTable")
                                 
                               )
                    )                      

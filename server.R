@@ -28,7 +28,6 @@ shinyServer(function(input, output) {
     # be found.
   
   #Define a global variable for holding limma obj
-  x <- NULL 
   probePath <- NULL
   
   getProbePath <- function(){
@@ -38,24 +37,6 @@ shinyServer(function(input, output) {
   
   changeProbePath <- function(path){
     probePath <<- path
-  }
-  
-  getX <- function(){
-    return(x)
-  }
-  
-  changeX<- function(y){
-    x <<- y
-  }
-  
-  y <- NULL
-  
-  getY <- function(){
-    return(y)
-  }
-  
-  changeY <- function(x){
-    y <<- x
   }
   
   normalization <- function(data, style){
@@ -216,15 +197,27 @@ shinyServer(function(input, output) {
     
     ###############################################################
   observeEvent(input$analysisSubmitter, {
-    fit <- lmFit(getY(), getDesign())
+    design <- getDesign()
+    fit <- lmFit(getY(), design)
     toContrast <- getGroup()
-    typeof(toContrast)
     cont.matrix <- makeContrasts(
       contrasts = (toContrast),
-      levels = getDesign()
+      levels = design
     )
     fit2 <- contrasts.fit(fit, cont.matrix)
     EFit <- eBayes(fit2)
+    changeEfit(EFit)
+    cat("/nFUNCTION DONE\n")
+  })
+    
+  output$topTable <- renderDataTable({
+    
+    if (input$analysisSelection == 2){
+      topTable(getEfit(), adjust.method = "fdr")
+    }else{
+      NULL
+    }
+    
   })
 
       

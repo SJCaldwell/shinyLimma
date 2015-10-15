@@ -1,3 +1,22 @@
+y <- NULL
+
+changeY <- function(y){
+  y <<- y
+}
+getY <- function(){
+  return (y)
+}
+
+x <- NULL
+
+changeX <- function(x){
+  x <<- x
+}
+
+getX <- function(){
+  return (x)
+}
+
 download <<- FALSE
 
 changeDownload <- function(){
@@ -100,6 +119,17 @@ getGroup <- function(){
   toEval <- paste(toEval, sep = "", collapse = "")
   return (toEval)
 }
+
+Efit <- NULL
+
+getEfit <- function(){
+  return (Efit)
+}
+
+changeEfit <- function(efit){
+  Efit <<- efit
+}
+
 
 tutorial <- '<!DOCTYPE html>
 <html>
