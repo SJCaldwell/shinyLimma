@@ -217,13 +217,8 @@ shinyServer(function(input, output) {
     }else{
       NULL
     }
-    
   })
 
       
-      
-   
-  
-
   
 })
