@@ -6,6 +6,7 @@ library(limma)
 library(png)
 library(vsn)
 library(ggplot2)
+library(RUnit)
 source("arrayQCRunner.r")
 source("helper.R")
 source("syntaxChecker.R")
@@ -218,6 +219,13 @@ shinyServer(function(input, output) {
       NULL
     }
   })
+  
+  #######TO-DO#########
+  #Filter by p.value, adjusted p-value
+  #Find a gene
+  #Venn-Diagram 
+  #Volcano Plot
+  #######TO-DO#########
 
       
   
