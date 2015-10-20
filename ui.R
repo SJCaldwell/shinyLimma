@@ -235,9 +235,9 @@ shinyUI(fluidPage(navbarPage("Shiny-Limma!",
                               
                               mainPanel(
                                 h3("Analysis Results"),
-                                dataTableOutput("topTable")
-                                
-                                
+                                dataTableOutput("topTable"),
+                                plotOutput("vennDiagram"),
+                                dataTableOutput("geneTable")
                               )
                    )                      
               ),

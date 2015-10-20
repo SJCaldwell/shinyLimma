@@ -1,5 +1,3 @@
-#closeAllConnections()
-#rm(list=ls())
 library(shiny)
 library(shinyBS)
 library(limma)
@@ -11,6 +9,7 @@ source("arrayQCRunner.r")
 source("helper.R")
 source("syntaxChecker.R")
 source("global.R", local = FALSE)
+source("limmaTool_Functions.r")
 source("data_shinyLimma/ggplotBoxPlotForArrays.r")
 source("data_shinyLimma/HeatmapRunner.r")
 
@@ -218,6 +217,22 @@ shinyServer(function(input, output) {
     }else{
       NULL
     }
+  })
+  
+  output$vennDiagram <- renderPlot({
+    
+    if(input$analysisSelection == 3){
+    results <- getEfit()
+    venn <- vennDiagram(results)
+    venn
+    }else{
+      NULL
+    }
+  })
+  
+  output$geneTable <- renderDataTable({
+    results <- getEfit()
+    
   })
   
   #######TO-DO#########
