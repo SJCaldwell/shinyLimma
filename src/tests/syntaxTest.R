@@ -1,5 +1,5 @@
 library(RUnit)
-setwd("C:/Users/jimc/Desktop/ShinyLimmaWorkspace")
+setwd("..")
 source("syntaxChecker.R")
 
 

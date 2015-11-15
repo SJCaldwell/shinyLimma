@@ -10,8 +10,8 @@ source("helper.R")
 source("syntaxChecker.R")
 source("global.R", local = FALSE)
 source("limmaTool_Functions.r")
-source("data_shinyLimma/ggplotBoxPlotForArrays.r")
-source("data_shinyLimma/HeatmapRunner.r")
+source("data/ggplotBoxPlotForArrays.r")
+source("data/HeatmapRunner.r")
 
 #rm(list=ls(all=TRUE))
 #Define server logic required to print whether dataset was uploaded
