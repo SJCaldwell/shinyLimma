@@ -2,7 +2,10 @@ library(shiny)
 library(shinyBS)
 
 #Define UI for Application Designed as a Limma workflow
-shinyUI(fluidPage(navbarPage("Shiny-Limma!",
+ui <- (tagList(
+  #Necessary call to shinyjs, independent of any tab.
+       useShinyjs(),
+       navbarPage("Shiny-Limma!",
                    ################################################################
                    
                    #### CLIENT-SIDE code for CHOOSE DATASET section HERE####

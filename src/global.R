@@ -1,3 +1,6 @@
+#Experimenting with Mandatory Fields
+fieldsMandatory <- c("probeFile", "targets", "controlProbeFile")
+
 y <- NULL
 
 changeY <- function(y){

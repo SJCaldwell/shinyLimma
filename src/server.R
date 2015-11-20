@@ -1,5 +1,6 @@
 library(shiny)
 library(shinyBS)
+library(shinyjs)
 library(limma)
 library(png)
 library(vsn)
@@ -59,6 +60,18 @@ shinyServer(function(input, output) {
     }
   }
 
+  observe({
+    #Vapply can force a return to logical
+    mandatoryFilled <-
+      vapply(fieldsMandatory,
+             function(x){
+               !is.null(input[[x]])
+             },
+             logical(1))
+    mandatoryFilled <- all(mandatoryFilled)
+    
+    shinyjs::toggleState(id = 'fileSubmitter', condition = mandatoryFilled)
+  })
   observeEvent(input$fileSubmitter, {
     #Capture control probe information from input
     probeFile = input$probeFile
