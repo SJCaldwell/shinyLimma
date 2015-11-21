@@ -14,8 +14,6 @@ source("limmaTool_Functions.r")
 source("data/ggplotBoxPlotForArrays.r")
 source("data/HeatmapRunner.r")
 
-#rm(list=ls(all=TRUE))
-#Define server logic required to print whether dataset was uploaded
 # setting this option. Here we'll raise limit to 130MB.
 options(shiny.maxRequestSize = 130*1024^2)
 
@@ -62,16 +60,18 @@ shinyServer(function(input, output) {
 
   observe({
     #Vapply can force a return to logical
-    mandatoryFilled <-
-      vapply(fieldsMandatory,
+    mandatoryFilledDataset <-
+      vapply(fieldsMandatoryDataset,
              function(x){
                !is.null(input[[x]])
              },
              logical(1))
-    mandatoryFilled <- all(mandatoryFilled)
-    
-    shinyjs::toggleState(id = 'fileSubmitter', condition = mandatoryFilled)
+    mandatoryFilledDataset <- all(mandatoryFilledDataset)
+    cat("Checking mandatoryFilledDataset... returns ", mandatoryFilledDataset)
+    shinyjs::toggleState(id = 'fileSubmitter', condition = mandatoryFilledDataset)
   })
+  
+  
   observeEvent(input$fileSubmitter, {
     #Capture control probe information from input
     probeFile = input$probeFile
@@ -109,6 +109,20 @@ shinyServer(function(input, output) {
           #### SERVER-SIDE code for EXPLORE section HERE####
     
     ###############################################################
+#    observe({
+#      #Vapply can force a return to logical
+#      mandatoryFilledExplore <-
+#        vapply(fieldsMandatoryExplore,
+#               function(x){
+#                 !is.null(input[[x]])
+#               },
+#               logical(1))
+#      cat(validGroups)
+#      mandatoryFilledExplore <- all(mandatoryFilledExplore)
+#      cat("...mandatoryFilled explore is returning...", " ", mandatoryFilledExplore)
+#      shinyjs::toggleState(id = 'exploreSelection', condition = mandatoryFilledExplore)
+#      shinyjs::toggleState(id = 'QCGenerator', condition = mandatoryFilledExplore)
+#    })
     
     output$exploratoryText <- renderText({
       
@@ -191,6 +205,20 @@ shinyServer(function(input, output) {
         changeGroup1(group1Syntax)
         changeGroup2(group2Syntax)
         cat("\nEVERYTHING ACTUALLY WORKED!\n")
+        
+        observe({
+          #Vapply can force a return to logical
+          mandatoryFilledRunModel <-
+            vapply(fieldsMandatoryRunModel,
+                   function(x){
+                     !is.null(input[[x]])
+                   },
+                   logical(1))
+          mandatoryFilledDataset <- all(mandatoryFilledRunModel)
+          cat("Checking mandatoryFilledRunModel... returns ", mandatoryFilledRunModel)
+          shinyjs::toggleState(id = 'analysisSubmitter', condition = mandatoryFilledRunModel)
+        })
+        
       }else{
         cat("Somehow the console should display this is a problem and that the user should try again.")
       }

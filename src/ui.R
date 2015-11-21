@@ -4,8 +4,8 @@ library(shinyBS)
 #Define UI for Application Designed as a Limma workflow
 ui <- (tagList(
   #Necessary call to shinyjs, independent of any tab.
-       useShinyjs(),
-       navbarPage("Shiny-Limma!",
+       shinyjs::useShinyjs(),
+       navbarPage(title = a(href="http://shanecaldwell.info/2015/02/06/shinyLimma.html", "Shiny-Limma!"),
                    ################################################################
                    
                    #### CLIENT-SIDE code for CHOOSE DATASET section HERE####

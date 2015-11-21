@@ -1,5 +1,6 @@
 #Experimenting with Mandatory Fields
-fieldsMandatory <- c("probeFile", "targets", "controlProbeFile")
+fieldsMandatoryDataset <- c("probeFile", "targets", "controlProbeFile")
+fieldsMandatoryRunModel <- c("group1Syntax", "group2Syntax")
 
 y <- NULL
 
