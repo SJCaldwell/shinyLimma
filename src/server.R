@@ -20,13 +20,7 @@ options(shiny.maxRequestSize = 130*1024^2)
 
 
 shinyServer(function(input, output) {
-    # input$file1 will be NULL initially. After the user selects
-    # and uploads a file, it will be a data frame with 'name',
-    # 'size', 'type', and 'datapath' columns. The 'datapath'
-    # column will contain the local filenames where the data can
-    # be found.
-  
-  #Define a global variable for holding limma obj
+ 
   probePath <- NULL
   
   getProbePath <- function(){
@@ -109,21 +103,7 @@ shinyServer(function(input, output) {
           #### SERVER-SIDE code for EXPLORE section HERE####
     
     ###############################################################
-#    observe({
-#      #Vapply can force a return to logical
-#      mandatoryFilledExplore <-
-#        vapply(fieldsMandatoryExplore,
-#               function(x){
-#                 !is.null(input[[x]])
-#               },
-#               logical(1))
-#      cat(validGroups)
-#      mandatoryFilledExplore <- all(mandatoryFilledExplore)
-#      cat("...mandatoryFilled explore is returning...", " ", mandatoryFilledExplore)
-#      shinyjs::toggleState(id = 'exploreSelection', condition = mandatoryFilledExplore)
-#      shinyjs::toggleState(id = 'QCGenerator', condition = mandatoryFilledExplore)
-#    })
-    
+
     output$exploratoryText <- renderText({
       
       if (input$exploreSelection == 1){

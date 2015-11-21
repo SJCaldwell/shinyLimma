@@ -1,10 +1,14 @@
 library(shiny)
 library(shinyBS)
+library(shinyjs)
+
 
 #Define UI for Application Designed as a Limma workflow
 ui <- (tagList(
   #Necessary call to shinyjs, independent of any tab.
        shinyjs::useShinyjs(),
+       titlePanel(title = "", windowTitle = "Shiny-Limma!"),
+       
        navbarPage(title = a(href="http://shanecaldwell.info/2015/02/06/shinyLimma.html", "Shiny-Limma!"),
                    ################################################################
                    
