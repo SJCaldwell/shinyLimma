@@ -7,6 +7,7 @@ library(shinyjs)
 ui <- (tagList(
   #Necessary call to shinyjs, independent of any tab.
        shinyjs::useShinyjs(),
+       tags$head(tags$link(rel = 'icon', href = "favicon.ico", type = "image/x-icon")),
        titlePanel(title = "", windowTitle = "Shiny-Limma!"),
        
        navbarPage(title = a(href="http://shanecaldwell.info/2015/02/06/shinyLimma.html", "Shiny-Limma!"),

@@ -6,18 +6,18 @@ library(png)
 library(vsn)
 library(ggplot2)
 library(RUnit)
-source("arrayQCRunner.r")
-source("helper.R")
-source("syntaxChecker.R")
+source("helpers/arrayQCRunner.r")
+source("helpers/helper.R")
+source("helpers/syntaxChecker.R")
+source("helpers/limmaTool_Functions.r")
+source("helpers/ggplotBoxPlotForArrays.r")
+source("helpers/HeatmapRunner.r")
+source("helpers/normalization.R")
 source("global.R", local = FALSE)
-source("limmaTool_Functions.r")
-source("data/ggplotBoxPlotForArrays.r")
-source("data/HeatmapRunner.r")
+
 
 # setting this option. Here we'll raise limit to 130MB.
 options(shiny.maxRequestSize = 130*1024^2)
-
-
 
 shinyServer(function(input, output) {
  
@@ -32,26 +32,6 @@ shinyServer(function(input, output) {
     probePath <<- path
   }
   
-  normalization <- function(data, style){
-    if (style == 1){
-      return (data)
-    }
-    else if (style == 2){
-      newData = normalizeVSN(data)
-      return (newData)
-    }
-    else if (style == 3){
-      newData = neqc(data)
-      return (newData)
-    }
-    else if (style == 4){
-      newData = normalizeBetweenArrays(data, method = "cyclicloess", cyclic.method = "fast")
-      return (newData)
-    }else{
-      return(-1)
-    }
-  }
-
   observe({
     #Vapply can force a return to logical
     mandatoryFilledDataset <-
@@ -185,20 +165,6 @@ shinyServer(function(input, output) {
         changeGroup1(group1Syntax)
         changeGroup2(group2Syntax)
         cat("\nEVERYTHING ACTUALLY WORKED!\n")
-        
-        observe({
-          #Vapply can force a return to logical
-          mandatoryFilledRunModel <-
-            vapply(fieldsMandatoryRunModel,
-                   function(x){
-                     !is.null(input[[x]])
-                   },
-                   logical(1))
-          mandatoryFilledDataset <- all(mandatoryFilledRunModel)
-          cat("Checking mandatoryFilledRunModel... returns ", mandatoryFilledRunModel)
-          shinyjs::toggleState(id = 'analysisSubmitter', condition = mandatoryFilledRunModel)
-        })
-        
       }else{
         cat("Somehow the console should display this is a problem and that the user should try again.")
       }
