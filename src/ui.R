@@ -1,6 +1,5 @@
 library(shiny)
 library(shinyBS)
-library(shinyjs)
 
 ui <- (tagList(
   #Necessary call to shinyjs, independent of any tab. DON'T MOVE

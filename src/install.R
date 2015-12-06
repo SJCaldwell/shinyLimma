@@ -29,18 +29,18 @@ download_not_installed <- function(x){
 }
 
 vanilla_install_packages <- c("limma",
-							'markdown',
-							'shiny',
-							'shinyjs',
-							'shinyBS'
-							'scales',
-							'markdown',
-							'ggplot2',
-							'png',
-							'vsn',
-							'RUnit')
+							             'markdown',
+							                'shiny',
+							              'shinyjs',
+							              'shinyBS',
+							               'scales',
+							             'markdown',
+							              'ggplot2',
+							                  'png',
+							                  'vsn',
+							                 'RUnit',
+							                 'reshape')
 download_not_installed(vanilla_install_packages)
-
 ###################################
 #Should use latest version of shiny
 ###################################
