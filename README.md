@@ -5,7 +5,7 @@ shinyLimma is a web application providing a graphical user interface to the diff
 
 ## Citation
 
-shinyLimma! is provided free of charge. If you use it, I only ask that you please cite/attribute any work you do with the application to this page, allowing more people to learn of it and use it.
+shinyLimma is provided free of charge. If you use it, I only ask that you please cite/attribute any work you do with the application to this page, allowing more people to learn of it and use it.
 
 ### Instructions for a local session:
 
@@ -13,6 +13,8 @@ shinyLimma! is provided free of charge. If you use it, I only ask that you pleas
 install.packages("shiny")
 shiny::runGitHub("shinyLimma", "SJCaldwell")
 ```
+This should be enough to launch a shinyLimma session, using R as the back-end and a browser of your choice as the front-end.
+
 To get the full list of packages it will install, see install.R in the src directory. 
 
 ### Instructions for hosting shinyLimma on a server backend.
