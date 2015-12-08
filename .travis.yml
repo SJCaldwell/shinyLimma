@@ -1,0 +1,6 @@
+language: r
+sudo: required
+bioc_required: true 
+r_binary_packages:
+- RUnit
+
