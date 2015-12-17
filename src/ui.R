@@ -128,6 +128,15 @@ tabPanel("Preprocessing",
                  sliderInput("filterSlider", "Select your own percentage:",
                 min = 0, max = 100, value = 5)
                       ),
+      selectInput("ratioSelection", label = "What percentage of the samples must meet the filtering criteria?",
+                 choices = list("None of them" = 1, "Exploratory (25%)" = 0.25, "Standard (15%)" = 0.15,
+                                "Conservative (10%)" = 0.10, "Choose my own value" = 4),
+                 selected = 1),
+      conditionalPanel(
+                condition = "input.ratioSelection == 4",
+                sliderInput("ratioSlider", "Select your own ratio:",
+               min = 0, max = 100, value = 10)
+                      ),
 
       br(),
       br(),

@@ -124,18 +124,23 @@ shinyServer(function(input, output) {
   })
   
   observeEvent(input$preprocessingSubmitter, {
+    USER_CUSTOM <- 4
     x <- getX()
     if(input$backgroundCheckbox){
       x <-backgroundCorrect(x)
-      cat("\nBackground Correct Happened\n")
     }
     x <- normalization(x, input$normalizationSelection)
-    if(input$filteringSelection == 4){
-    expressed <- rowSums(x$other$Detection < input$filterSlider) >= round(ncol(x)/4)
-      
-    }else{
-    expressed <- rowSums(x$other$Detection < input$filteringSelection) >= round(ncol(x)/4)
+    filter_level <- as.numeric(input$filteringSelection)
+    ratio  <-  round(ncol(x) * (as.numeric(input$ratioSelection)))
+    if(input$filteringSelection == USER_CUSTOM){
+      filter_level <- as.numeric(input$filterSlider)/100
     }
+    if(input$ratioSelection == USER_CUSTOM){
+      ratio  <- round(ncol(x) * (as.numeric(input$ratioSlider)/100))
+    }
+    #cat(typeof(filter_level), ":", filter_level, "\n")
+    #cat(typeof(ratio), ":", ratio, "\n")
+    expressed <- rowSums(x$other$Detection < filter_level) >= ratio
     x<- x[expressed,]
     changeY(x)
     y <- getY()
