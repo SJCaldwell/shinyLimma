@@ -22,8 +22,8 @@ cat("normExpression <- normExpression[passedQC,]\n")
 
 #Get rid of magic numbers
 cat("NAMES <- 1\n")
-cat("geneTable <- normExpression$genes\n"
-cat("geneList <- geneNames[[NAMES]]\n"
+cat("geneTable <- normExpression$genes\n")
+cat("geneList <- geneNames[[NAMES]]\n")
 
 #Get rid of redundant survivors
 cat("normExpression <- avereps(normExpression, ID = geneList\n")
@@ -39,17 +39,17 @@ if(chooseCorrelation){
 cat('corfit <- duplicateCorrelation(normExpression, design, block = ','targets','[[',BLOCK,']]\n', sep="")
 }
 
-cat("fit <-lmFit(normExpression, design, block =", "targets$Donor"
+cat("fit <-lmFit(normExpression, design, block =", "targets$Donor")
 	if (chooseCorrelation){
 		cat(", correlation = corfit$consensus.correlation)\n", sep = "")
     }else{
     	cat(")\n", sep = "")
     }
 cat("cont.matrix <- makeContrasts(\n
-  ProvArg = (", GROUP1, '-', GROUP2'),\n
-  levels = design\n\n)')
+  ProvArg = (", GROUP1, '-', GROUP2,',),\n',
+  'levels = design\n\n)')
 cat("fit2 <- contrasts.fit(fit, cont.matrix)\n")
-cat("PROfit2<-eBayes(fit2)\n"
+cat("PROfit2<-eBayes(fit2)\n")
 cat("topTable(PROfit2, adjust.method = 'fdr')\n")
 cat("PROresults <- decideTests(fit2, method = 'separate', adjust.method = 'fdr')")
 sink()
