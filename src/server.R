@@ -15,7 +15,6 @@ source("helpers/HeatmapRunner.R")
 source("helpers/normalization.R")
 source("global.R", local = FALSE)
 
-
 # setting this option. Here we'll raise limit to 130MB.
 options(shiny.maxRequestSize = 130*1024^2)
 
@@ -26,7 +25,6 @@ shinyServer(function(input, output) {
   getProbePath <- function(){
     return (probePath)
   }
-  
   
   changeProbePath <- function(path){
     probePath <<- path
@@ -45,21 +43,20 @@ shinyServer(function(input, output) {
     shinyjs::toggleState(id = 'fileSubmitter', condition = mandatoryFilledDataset)
   })
   
-  
   observeEvent(input$fileSubmitter, {
     #Capture control probe information from input
-    probeFile = input$probeFile
-    controlFile = input$controlProbeFile
-    targetFile = input$targets
+    probeFile <- input$probeFile
+    controlFile <- input$controlProbeFile
+    targetFile <- input$targets
     #Save path names for manipulation
-    probePath = probeFile$datapath
+    probePath <- probeFile$datapath
     changeProbePath(probePath)
-    controlPath = controlFile$datapath
-    targetPath = targetFile$datapath
+    controlPath <- controlFile$datapath
+    targetPath <- targetFile$datapath
     #Prep path names that will be used by Limma.
-    probePath = substr(probePath, 1, nchar(probePath)-2)
-    controlPath = substr(controlPath, 1, nchar(controlPath)-2)
-    targetPath = substr(targetPath, 1, nchar(targetPath)-2)
+    probePath <- substr(probePath, 1, nchar(probePath)-2)
+    controlPath <- substr(controlPath, 1, nchar(controlPath)-2)
+    targetPath <- substr(targetPath, 1, nchar(targetPath)-2)
     #Read ilmn just like mom used to do.
     target <- readTargets(file = "0", path = targetPath)
     x <- read.ilmn("0" , "0", path = probePath, ctrlpath = controlPath)
@@ -68,7 +65,6 @@ shinyServer(function(input, output) {
     valid <- calculateValidGroups(getTargets())
     changeValidGroups(valid)
     
-    
     output$rawPlot <- renderPlot({
       progress <- shiny::Progress$new()
       on.exit(progress$close())
@@ -76,7 +72,6 @@ shinyServer(function(input, output) {
       plot <- densityPlotter(x)
       progress$set(message = "Almost done!", value = 1.0)
       plot
-    
   })
     ################################################################
     
@@ -165,24 +160,21 @@ shinyServer(function(input, output) {
       goodSyntax <- CMSyntaxChecker(group1Syntax, group2Syntax)
       
       if (goodSyntax){
-        cat("SUCCESS! Feel free to play with this and run good code.")
         computeMatrix(group1Syntax, group2Syntax, corr = NULL)
         changeGroup1(group1Syntax)
         changeGroup2(group2Syntax)
-        cat("\nEVERYTHING ACTUALLY WORKED!\n")
       }else{
-        cat("Somehow the console should display this is a problem and that the user should try again.")
+        cat("\nTO-DO:\nSomehow the console should display this is a problem and that the user should try again.")
       }
   })
   
-    output$targetsTable <- renderDataTable({
-    toDisplay <- getTargets()
-    if(isnt.null(toDisplay)){
-      toDisplay <- as.data.frame(toDisplay)
-      toDisplay
+  output$targetsTable <- renderDataTable({
+  toDisplay <- getTargets()
+  if(isnt.null(toDisplay)){
+    toDisplay <- as.data.frame(toDisplay)
+    toDisplay
     }
-    })
-    
+    })  
     ################################################################
     
     #### SERVER-SIDE code for ANALYSIS section HERE####
@@ -199,7 +191,6 @@ shinyServer(function(input, output) {
     fit2 <- contrasts.fit(fit, cont.matrix)
     EFit <- eBayes(fit2)
     changeEfit(EFit)
-    cat("/nFUNCTION DONE\n")
   })
     
   output$topTable <- renderDataTable({
@@ -224,7 +215,6 @@ shinyServer(function(input, output) {
   
   output$geneTable <- renderDataTable({
     results <- getEfit()
-    
   })
   
   #######TO-DO#########

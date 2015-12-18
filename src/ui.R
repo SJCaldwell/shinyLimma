@@ -9,7 +9,7 @@ ui <- (tagList(
   navbarPage(title = a(href="http://shanecaldwell.info/2015/02/06/shinyLimma.html", "Shiny-Limma!"),
 ################################################################
 
-#### CLIENT-SIDE code for CHOOSE DATASET section HERE####
+#### CLIENT-SIDE code for CHOOSE DATASET section HERE ####
 
 ###############################################################
 tabPanel("Choose Dataset",
