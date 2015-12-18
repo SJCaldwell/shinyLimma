@@ -23,12 +23,16 @@ shinyServer(function(input, output) {
  
   probePath <- NULL
   
-  downloadReady <- FALSE 
+  downloadReady <- FALSE
+  
+  isDownloadReady <- function(){
+    return (downloadReady)
+  }
   
   getProbePath <- function(){
     return (probePath)
   }
-  
+
   changeProbePath <- function(path){
     probePath <<- path
   }
@@ -42,7 +46,6 @@ shinyServer(function(input, output) {
              },
              logical(1))
     mandatoryFilledDataset <- all(mandatoryFilledDataset)
-    cat("Checking mandatoryFilledDataset... returns ", mandatoryFilledDataset)
     shinyjs::toggleState(id = 'fileSubmitter', condition = mandatoryFilledDataset)
   })
   
@@ -109,7 +112,6 @@ shinyServer(function(input, output) {
     observeEvent(input$QCGenerator, {
       QC_Reporter(probePath)
       changeDownload()
-      cat(download)
     })
     ################################################################
     
@@ -136,8 +138,6 @@ shinyServer(function(input, output) {
     if(input$ratioSelection == USER_CUSTOM){
       ratio  <- round(ncol(x) * (as.numeric(input$ratioSlider)/100))
     }
-    #cat(typeof(filter_level), ":", filter_level, "\n")
-    #cat(typeof(ratio), ":", ratio, "\n")
     expressed <- rowSums(x$other$Detection < filter_level) >= ratio
     x<- x[expressed,]
     changeY(x)
@@ -145,7 +145,6 @@ shinyServer(function(input, output) {
     
     output$preprocessingPlot <- renderPlot({
       boxplot(log2(y$E),range=0,ylab="log2 intensity")
-      cat("\nPlot updated!\n")
     })
 
   })
@@ -158,7 +157,6 @@ shinyServer(function(input, output) {
       group1Syntax <- input$group1Contrast
       group2Syntax <- input$group2Contrast
       goodSyntax <- CMSyntaxChecker(group1Syntax, group2Syntax)
-      
       if (goodSyntax){
         computeMatrix(group1Syntax, group2Syntax, corr = NULL)
         changeGroup1(group1Syntax)
@@ -215,7 +213,12 @@ shinyServer(function(input, output) {
   })
   
   output$geneTable <- renderDataTable({
-    results <- getEfit()
+    if(input$analysisSelection == 4){
+    NUM_GENES <- nrow(getEfit())
+    topTable(getEfit(), number = NUM_GENES)
+    }else{
+      NULL
+    }
   })
   
   #######TO-DO#########
@@ -223,8 +226,9 @@ shinyServer(function(input, output) {
   #Venn-Diagram 
   #Volcano Plot
   #######TO-DO#########
-  output$codeDownloader <- renderText({
-    if(downloadReady){
+  # observeEvent(input$fileSubmitter, {
+  observeEvent(input$codeDownloader, {
+    if(isDownloadReady()){
     writeScript()
     }
     })

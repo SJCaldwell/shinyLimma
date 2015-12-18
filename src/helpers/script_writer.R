@@ -1,6 +1,6 @@
 #Programmer: Shane Caldwell
 writeScript <- function(){
-sink(file = "research.R")
+sink("research.R")
 cat("library(limma)\n")
 cat("library(statmod)\n")
 cat("library(fdrtool)\n")
@@ -53,4 +53,6 @@ cat("PROfit2<-eBayes(fit2)\n")
 cat("topTable(PROfit2, adjust.method = 'fdr')\n")
 cat("PROresults <- decideTests(fit2, method = 'separate', adjust.method = 'fdr')")
 sink()
+cat("WRITE OF FILE COMPLETE")
+getwd()
 }
