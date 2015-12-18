@@ -236,7 +236,7 @@ tabPanel("Export Reports",
         p("Export your results here!"),
         br(),
         br(),
-        downloadButton("codeDownloader", "Get my code.")
+        actionButton("codeDownloader", "Get my code.")
                   ),
       mainPanel(
         h4("Options")

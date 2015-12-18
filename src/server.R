@@ -23,6 +23,8 @@ shinyServer(function(input, output) {
  
   probePath <- NULL
   
+  downloadReady <- FALSE 
+  
   getProbePath <- function(){
     return (probePath)
   }
@@ -144,7 +146,6 @@ shinyServer(function(input, output) {
     output$preprocessingPlot <- renderPlot({
       boxplot(log2(y$E),range=0,ylab="log2 intensity")
       cat("\nPlot updated!\n")
-      
     })
 
   })
@@ -190,6 +191,7 @@ shinyServer(function(input, output) {
     fit2 <- contrasts.fit(fit, cont.matrix)
     EFit <- eBayes(fit2)
     changeEfit(EFit)
+    downloadReady <<- TRUE
   })
     
   output$topTable <- renderDataTable({
@@ -221,7 +223,9 @@ shinyServer(function(input, output) {
   #Venn-Diagram 
   #Volcano Plot
   #######TO-DO#########
-  output$codeDownloader <- downloadHandler({
+  output$codeDownloader <- renderText({
+    if(downloadReady){
     writeScript()
+    }
     })
 })

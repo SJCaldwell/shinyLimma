@@ -5,9 +5,9 @@ cat("library(limma)\n")
 cat("library(statmod)\n")
 cat("library(fdrtool)\n")
 #Prepare Inputs
-cat("probeData <- ", "'", probeName, "'\n", sep = "")
-cat("CtrlProbe <- ", "'", ControlProbeName, "'\n", sep = "")
-cat("filepath <- ", "'", directoryPath, "'\n", sep = "")
+cat("probeData <- ", "'", probeFile, "'\n", sep = "")
+cat("CtrlProbe <- ", "'", ControlProbeFile, "'\n", sep = "")
+cat("filepath <- ", "'", probePath, "'\n", sep = "")
 cat("setwd(filepath)\n")
 cat("targets <- readTargets(", "'", targetPath, "'\n", sep = "")
 
@@ -16,7 +16,7 @@ cat('rawExpression <- read.ilmn(files = probeData, ctrlfiles = CtrlProbe, probei
 
 #Quality Control
 cat("rawExpression <- backgroundCorrect(rawExpression, method = 'half')\n")
-cat("passedQC <- rowSums(rawExpression$other$Detection <=", QC1,") >= (ncol(rawExpression)", QC2, ")\n", sep = "")
+cat("passedQC <- rowSums(rawExpression$other$Detection <=", filter_level,") >= ", ratio, ")\n", sep = "")
 cat("normExpression <- normalizeVSN(rawExpression)\n")
 cat("normExpression <- normExpression[passedQC,]\n")
 
@@ -46,8 +46,8 @@ cat("fit <-lmFit(normExpression, design, block =", "targets$Donor")
     	cat(")\n", sep = "")
     }
 cat("cont.matrix <- makeContrasts(\n
-  ProvArg = (", GROUP1, '-', GROUP2,',),\n',
-  'levels = design\n\n)')
+  ProvArg = (", group1Syntax, '-', group2Syntax,',),\n',
+  'levels = design\n\n)', sep = "")
 cat("fit2 <- contrasts.fit(fit, cont.matrix)\n")
 cat("PROfit2<-eBayes(fit2)\n")
 cat("topTable(PROfit2, adjust.method = 'fdr')\n")
