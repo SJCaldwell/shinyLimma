@@ -118,6 +118,7 @@ tabPanel("Preprocessing",
                   selected = 1),
       br(),
       br(),
+      
       selectInput("filteringSelection", label = "Choose desired filtering level for probes...",
                  choices = list("No filtering..." = 1, "Exploratory (10%)" = 0.10,
                  "Standard (5%)" = 0.05, "Conservative (1%)" = 0.01, "Choose my own value" = 4),
@@ -128,6 +129,9 @@ tabPanel("Preprocessing",
                  sliderInput("filterSlider", "Select your own percentage:",
                 min = 0, max = 100, value = 5)
                       ),
+      br(),
+      br(),
+
       selectInput("ratioSelection", label = "What percentage of the samples must meet the filtering criteria?",
                  choices = list("None of them" = 1, "Exploratory (25%)" = 0.25, "Standard (15%)" = 0.15,
                                 "Conservative (10%)" = 0.10, "Choose my own value" = 4),
