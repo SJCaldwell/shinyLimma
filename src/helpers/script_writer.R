@@ -5,18 +5,18 @@ cat("library(limma)\n")
 cat("library(statmod)\n")
 cat("library(fdrtool)\n")
 #Prepare Inputs
-cat("probeData <- ", "'", probeFile, "'\n", sep = "")
-cat("CtrlProbe <- ", "'", ControlProbeFile, "'\n", sep = "")
-cat("filepath <- ", "'", probePath, "'\n", sep = "")
+cat("probeData <- ", "'", getProbeFile(), "'\n", sep = "")
+cat("CtrlProbe <- ", "'", getControlProbeFile(), "'\n", sep = "")
+cat("filepath <- ", "'", "GET PATH", "'\n", sep = "")
 cat("setwd(filepath)\n")
-cat("targets <- readTargets(", "'", targetPath, "'\n", sep = "")
+cat("targets <- readTargets(", "'", getTargetPath(), "'\n", sep = "")
 
 #Read in inputs
 cat('rawExpression <- read.ilmn(files = probeData, ctrlfiles = CtrlProbe, probeid="ProbeID", other.columns = "Detection")\n')
 
 #Quality Control
 cat("rawExpression <- backgroundCorrect(rawExpression, method = 'half')\n")
-cat("passedQC <- rowSums(rawExpression$other$Detection <=", filter_level,") >= ", ratio, ")\n", sep = "")
+cat("passedQC <- rowSums(rawExpression$other$Detection <=", getFilterLevel(),") >= ", getRatio(), ")\n", sep = "")
 cat("normExpression <- normalizeVSN(rawExpression)\n")
 cat("normExpression <- normExpression[passedQC,]\n")
 
@@ -35,24 +35,22 @@ cat('design <- model.matrix(~0+GEC)\n')
 cat('colnames(design) <-levels(as.factor(GEC)\n')
 #Choices become relevant for deciding which code to produce
 #some lines must be altered, some must never created at all
-if(chooseCorrelation){
-cat('corfit <- duplicateCorrelation(normExpression, design, block = ','targets','[[',BLOCK,']]\n', sep="")
+if(getCorrelationChoice()){
+cat('corfit <- duplicateCorrelation(normExpression, design, block = ','targets','[[', 'block', ']]\n', sep="")
 }
 
 cat("fit <-lmFit(normExpression, design, block =", "targets$Donor")
-	if (chooseCorrelation){
+	if (getCorrelationChoice()){
 		cat(", correlation = corfit$consensus.correlation)\n", sep = "")
     }else{
     	cat(")\n", sep = "")
     }
 cat("cont.matrix <- makeContrasts(\n
-  ProvArg = (", group1Syntax, '-', group2Syntax,',),\n',
-  'levels = design\n\n)', sep = "")
+    contrast = (", getGroup1(), '-', getGroup2(),'),\n',
+  'levels = design)\n\n', sep = "")
 cat("fit2 <- contrasts.fit(fit, cont.matrix)\n")
-cat("PROfit2<-eBayes(fit2)\n")
-cat("topTable(PROfit2, adjust.method = 'fdr')\n")
-cat("PROresults <- decideTests(fit2, method = 'separate', adjust.method = 'fdr')")
+cat("fit2<-eBayes(fit2)\n")
+cat("topTable(fit2, adjust.method = 'fdr')\n")
+cat("results <- decideTests(fit2, method = 'separate', adjust.method = 'fdr')")
 sink()
-cat("WRITE OF FILE COMPLETE")
-getwd()
 }

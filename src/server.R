@@ -37,6 +37,7 @@ shinyServer(function(input, output) {
     probePath <<- path
   }
   
+  
   observe({
     #Vapply can force a return to logical
     mandatoryFilledDataset <-
@@ -220,7 +221,6 @@ shinyServer(function(input, output) {
       NULL
     }
   })
-  
   #######TO-DO#########
   #Filter by p.value, adjusted p-value
   #Venn-Diagram 

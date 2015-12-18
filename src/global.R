@@ -21,6 +21,66 @@ getX <- function(){
   return (x)
 }
 
+probeFile <- NULL
+
+changeProbeFile <- function(probeName){
+  probeFile <<- probeName
+}
+
+getProbeFile <- function(){
+  return(probeFile)
+}
+
+controlProbeFile <- NULL
+
+changeControlProbeFile <- function(controlProbeName){
+  controlProbeFile <<- controlProbeName
+}
+
+getControlProbeFile <- function(){
+  return(controlProbeFile)
+}
+
+targetPath <- NULL
+
+changeTargetPath <- function(target_file_path){
+  targetPath <<- target_file_path
+}
+
+getTargetPath <- function(){
+  return(targetPath)
+}
+
+filter_level <- NULL
+
+changeFilterLevel <- function(filter){
+  filter_level <<- filter
+}
+
+getFilterLevel <- function(){
+  return(filter_level)
+}
+
+ratio <- NULL
+
+changeRatio <- function(ratio){
+  ratio <<- ratio
+}
+
+getRatio <- function(){
+  return (ratio)
+}
+
+correlationChoice <-FALSE
+
+changeCorrelationChoice <- function(choice){
+  correlationChoice <<- choice
+}
+
+getCorrelationChoice <- function(){
+  return (correlationChoice)
+}
+
 download <<- FALSE
 
 changeDownload <- function(){
