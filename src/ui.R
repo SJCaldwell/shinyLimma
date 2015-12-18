@@ -118,7 +118,7 @@ tabPanel("Preprocessing",
                   selected = 1),
       br(),
       br(),
-      
+
       selectInput("filteringSelection", label = "Choose desired filtering level for probes...",
                  choices = list("No filtering..." = 1, "Exploratory (10%)" = 0.10,
                  "Standard (5%)" = 0.05, "Conservative (1%)" = 0.01, "Choose my own value" = 4),
@@ -236,7 +236,7 @@ tabPanel("Export Reports",
         p("Export your results here!"),
         br(),
         br(),
-        actionButton("reportSubmitter", "Download my Report!")
+        downloadButton("codeDownloader", "Get my code.")
                   ),
       mainPanel(
         h4("Options")

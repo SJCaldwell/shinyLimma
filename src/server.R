@@ -13,6 +13,7 @@ source("helpers/limmaTool_Functions.R")
 source("helpers/ggplotBoxPlotForArrays.R")
 source("helpers/HeatmapRunner.R")
 source("helpers/normalization.R")
+source("helpers/script_writer.R")
 source("global.R", local = FALSE)
 
 # setting this option. Here we'll raise limit to 130MB.
@@ -147,13 +148,11 @@ shinyServer(function(input, output) {
     })
 
   })
-  
   ################################################################
   
   #### SERVER-SIDE code for CONTRAST MATRiX section HERE####
   
-  ###############################################################
-  
+  ###############################################################  
   observeEvent(input$contrastSubmitter, {
       group1Syntax <- input$group1Contrast
       group2Syntax <- input$group2Contrast
@@ -219,11 +218,10 @@ shinyServer(function(input, output) {
   
   #######TO-DO#########
   #Filter by p.value, adjusted p-value
-  #Find a gene
   #Venn-Diagram 
   #Volcano Plot
   #######TO-DO#########
-
-      
-  
+  output$codeDownloader <- downloadHandler({
+    writeScript()
+    })
 })

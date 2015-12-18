@@ -1,5 +1,6 @@
 #Programmer: Shane Caldwell
-sink(file = "research.R", append = FALSE, type = "message")
+writeScript <- function(){
+sink(file = "research.R")
 cat("library(limma)\n")
 cat("library(statmod)\n")
 cat("library(fdrtool)\n")
@@ -51,3 +52,5 @@ cat("fit2 <- contrasts.fit(fit, cont.matrix)\n")
 cat("PROfit2<-eBayes(fit2)\n"
 cat("topTable(PROfit2, adjust.method = 'fdr')\n")
 cat("PROresults <- decideTests(fit2, method = 'separate', adjust.method = 'fdr')")
+sink()
+}
