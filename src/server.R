@@ -14,6 +14,7 @@ source("helpers/ggplotBoxPlotForArrays.R")
 source("helpers/HeatmapRunner.R")
 source("helpers/normalization.R")
 source("helpers/script_writer.R")
+source("helpers/scaledVennDiagram.R")
 source("global.R", local = FALSE)
 
 # setting this option. Here we'll raise limit to 130MB.
@@ -206,10 +207,10 @@ shinyServer(function(input, output) {
     
     if(input$analysisSelection == 3){
     Efit <- getEfit()
-    vennMatrix <- decideTests(Efit)
-    vennMatrix <- vennCounts(vennMatrix)
-    customVenn <- vennDiagram(vennMatrix, circle.col = c("red", "green"))
-    customVenn
+    criteria <- decideTests(Efit)
+    up <- vennCounts(criteria, include = "up")[4]
+    down <- vennCounts(criteria, include = "down")[4]
+    ScaledVennDiagram(up, down)
     }else{
       NULL
     }

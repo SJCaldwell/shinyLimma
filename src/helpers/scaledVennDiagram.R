@@ -1,4 +1,4 @@
-library(vennDiagram)
+library(VennDiagram)
 ScaledVennDiagram <- function(up, down, neutral){
   grid.newpage()
   venn.plot <- draw.pairwise.venn(area1        = up,
