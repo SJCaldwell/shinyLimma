@@ -205,9 +205,11 @@ shinyServer(function(input, output) {
   output$vennDiagram <- renderPlot({
     
     if(input$analysisSelection == 3){
-    results <- getEfit()
-    venn <- vennDiagram(results)
-    venn
+    Efit <- getEfit()
+    vennMatrix <- decideTests(Efit)
+    vennMatrix <- vennCounts(vennMatrix)
+    customVenn <- vennDiagram(vennMatrix)
+    customVenn
     }else{
       NULL
     }
@@ -226,7 +228,6 @@ shinyServer(function(input, output) {
   #Venn-Diagram 
   #Volcano Plot
   #######TO-DO#########
-  # observeEvent(input$fileSubmitter, {
   observeEvent(input$codeDownloader, {
     if(isDownloadReady()){
     writeScript()
