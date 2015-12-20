@@ -45,14 +45,14 @@ tabPanel("Choose Dataset",
                   )
                 ),
       tags$hr(),
-      p("Version 0.1 of shiny-Limma accepts only Illumina Probe Data")
+      p("Version 0.1 of shiny-Limma accepts only Illumina Probe Data"),
+      tags$hr(),
+      actionButton("fileSubmitter", "Submit files!")
                 ),
 
     mainPanel(
       tags$style(type="text/css", "body { overflow-y: scroll; }"),
       #Button that reads in files and attempts to run ilmn
-      actionButton("fileSubmitter", "Submit files!"),
-
       plotOutput("rawPlot")
              )
                     )
@@ -208,7 +208,7 @@ tabPanel("Analysis",
       br(),
       selectInput("analysisSelection", label = "How do you want to look at your results?",
                  choices = list("Take your pick!" = 1, "Top Table" = 2,
-                 "Venn Diagram" = 3, "Choose a Gene" = 4),
+                 "Venn Diagram" = 3, "Select a Gene" = 4),
                  selected = 1)
               ),
     mainPanel(
