@@ -208,7 +208,7 @@ shinyServer(function(input, output) {
     Efit <- getEfit()
     vennMatrix <- decideTests(Efit)
     vennMatrix <- vennCounts(vennMatrix)
-    customVenn <- vennDiagram(vennMatrix)
+    customVenn <- vennDiagram(vennMatrix, circle.col = c("red", "green"))
     customVenn
     }else{
       NULL
