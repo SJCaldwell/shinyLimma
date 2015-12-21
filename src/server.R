@@ -53,15 +53,18 @@ shinyServer(function(input, output) {
   })
   
   observeEvent(input$fileSubmitter, {
-    #Capture control probe information from input
-    cat("starting to run file submit")
-    validate(
-      need(expr = FALSE, message = paste("Wrong file format. Try again!"))
-      ,"Failed")
+  #Capture control probe information from input
+  # cat("starting to run file submit")
+  #  validate(
+  #    need(expr = TRUE, message = paste("Wrong file format. Try again!"))
+  #    ,"Failed")
     
     probeFile <- input$probeFile
     controlFile <- input$controlProbeFile
     targetFile <- input$targets
+    cat(probeFile$type, "\n")
+    cat(probeFile$datapath, "\n")
+    cat(probeFile$name, "\n")
     #Save path names for manipulation
     probePath <- probeFile$datapath
     changeProbePath(probePath)
