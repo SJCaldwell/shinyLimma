@@ -6,6 +6,7 @@ library(png)
 library(vsn)
 library(ggplot2)
 library(RUnit)
+library(tools)
 source("helpers/arrayQCRunner.R")
 source("helpers/helper.R")
 source("helpers/syntaxChecker.R")
@@ -53,6 +54,11 @@ shinyServer(function(input, output) {
   
   observeEvent(input$fileSubmitter, {
     #Capture control probe information from input
+    cat("starting to run file submit")
+    validate(
+      need(expr = FALSE, message = paste("Wrong file format. Try again!"))
+      ,"Failed")
+    
     probeFile <- input$probeFile
     controlFile <- input$controlProbeFile
     targetFile <- input$targets
