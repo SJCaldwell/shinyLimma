@@ -1,6 +1,7 @@
 library(limma)
 library(statmod)
 library(fdrtool)
+
 probeData <- ''
 CtrlProbe <- ''
 filepath <- 'GET PATH'
@@ -21,7 +22,7 @@ colnames(design) <-levels(as.factor(GEC)
 fit <-lmFit(normExpression, design, block = targets$Donor)
 cont.matrix <- makeContrasts(
 
-    contrast = (Air-CSE),
+  contrast = (Air-CSE),
 levels = design)
 
 fit2 <- contrasts.fit(fit, cont.matrix)

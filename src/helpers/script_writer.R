@@ -3,7 +3,7 @@ writeScript <- function(){
 sink("research.R")
 cat("library(limma)\n")
 cat("library(statmod)\n")
-cat("library(fdrtool)\n")
+cat("library(fdrtool)\n\n")
 #Prepare Inputs
 cat("probeData <- ", "'", getProbeFile(), "'\n", sep = "")
 cat("CtrlProbe <- ", "'", getControlProbeFile(), "'\n", sep = "")
@@ -46,7 +46,7 @@ cat("fit <-lmFit(normExpression, design, block =", "targets$Donor")
     	cat(")\n", sep = "")
     }
 cat("cont.matrix <- makeContrasts(\n
-    contrast = (", getGroup1(), '-', getGroup2(),'),\n',
+  contrast = (", getGroup1(), '-', getGroup2(),'),\n',
   'levels = design)\n\n', sep = "")
 cat("fit2 <- contrasts.fit(fit, cont.matrix)\n")
 cat("fit2<-eBayes(fit2)\n")
