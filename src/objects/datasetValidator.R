@@ -5,8 +5,6 @@ datasets fit the format necessary to continue on with analysis.
 
 The input object will have an instance of both this and a datamanager"
 
-
-
 Validator = R6Class("Validator",
     public = list(
         validated = FALSE,
