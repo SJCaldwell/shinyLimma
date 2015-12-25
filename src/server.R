@@ -16,6 +16,9 @@ source("helpers/HeatmapRunner.R")
 source("helpers/normalization.R")
 source("helpers/script_writer.R")
 source("helpers/scaledVennDiagram.R")
+source("objects/datasetValidator.R")
+source("objects/rawArray.R")
+source("objects/normalizedArray.R")
 source("global.R", local = FALSE)
 
 # setting this option. Here we'll raise limit to 130MB.
