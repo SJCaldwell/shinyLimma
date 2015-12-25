@@ -13,15 +13,18 @@ Validator = R6Class("Validator",
         PATH = 0,
         NAME = 1,
         TYPE = 2,
-                
+        
         initialize = function(probe, control, target){
-	        probeList   = validate.packer(probe)
-	        controlList = validate.packer(control)
-	        targetList  = validate.packer(target)
-	        acceptableData = validate.delegator(probeList, controlList, targetList)
+          cat("Begin creating dataset validator")
+	        probeList   = self$validate.packer(probe)
+	        controlList = self$validate.packer(control)
+	        targetList  = self$validate.packer(target)
+	        acceptableData = self$validate.delegator(probeList, controlList, targetList)
+	        cat(acceptableData, "\n")
 	        if (acceptableData){
-		        self$validated = True 
+		        self$validated = TRUE
 	        }
+	        print(self)
          },
                 
         isValid = function(){
@@ -35,10 +38,10 @@ Validator = R6Class("Validator",
 			    return (toValidate)
 		    },
 
-        validate.delgator = function(probe, control, targets){
-	        probePass   = validate.probe(probe[self$PATH], probe[self$NAME], probe[self$TYPE])
-	        controlPass = validate.control(control[self$PATH], control[self$NAME], control[self$TYPE])
-	        targetsPass = validate.targets(targets[self$PATH], targets[self$NAME], targets[self$TYPE])
+		    validate.delegator = function(probe, control, targets){
+	        probePass   = self$validate.probe(probe[self$PATH], probe[self$NAME], probe[self$TYPE])
+	        controlPass = self$validate.control(control[self$PATH], control[self$NAME], control[self$TYPE])
+	        targetsPass = self$validate.targets(targets[self$PATH], targets[self$NAME], targets[self$TYPE])
 	        if(probePass && controlPass && targetsPass){
 		        return (TRUE)
 	        }
@@ -67,7 +70,13 @@ Validator = R6Class("Validator",
 		        return (FALSE)
 	        }
 	        return(TRUE)
+        },
+
+        print = function(...){
+          cat("<DataValidator class> instance that has determined the validity of the data to be ", self$validated, ".", sep = "")
+          invisible(self)
         }
+
           
                  
     )

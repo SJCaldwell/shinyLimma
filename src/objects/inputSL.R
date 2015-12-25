@@ -3,18 +3,20 @@ inputSL = R6Class("inputSL",
 		dataValidator = NULL,
 		dataManager = NULL,
 
-		initalize = function(probe, control, target){
-			self$dataValidator = Validator(probe, control, target)
+		initialize = function(probe, control, target){
+			self$dataValidator <<- Validator$new(probe, control, target)
+			print(self$dataValidator)
 			if (self$isValid()){
 				self$loadArrayData(probeFile, controlProbeFile)
 			}
 		},
 
 		isValid = function(){
+		  cat('is valid?...\n')
 			if (is.null(self$dataValidator)){
 				return (FAlSE)
 			}else{
-				self$dataValidator.isValid()
+				return(self$dataValidator$isValid())
 			}
 		},
 
@@ -26,8 +28,9 @@ inputSL = R6Class("inputSL",
     		probePath = substr(probePath, 1, nchar(probePath)-2)
     		controlPath = substr(controlPath, 1, nchar(controlPath)-2)
     		targetPath = substr(targetPath, 1, nchar(targetPath)-2)
-    		self$dataManager = rawArray(probePath, controlPath)
+    		self$dataManager = rawArray$new(probePath, controlPath)
 		}
 
 	)
 )
+

@@ -20,6 +20,7 @@ source("helpers/scaledVennDiagram.R")
 source("objects/datasetValidator.R")
 source("objects/rawArray.R")
 source("objects/normalizedArray.R")
+source("objects/inputSL.R")
 source("global.R", local = FALSE)
 
 # setting this option. Here we'll raise limit to 130MB.
@@ -49,7 +50,8 @@ shinyServer(function(input, output) {
     probeFile <- input$probeFile
     controlFile <- input$controlProbeFile
     targetFile <- input$targets
-    inputSL = inputSL(probeFile, controlFile, targetFile)
+    INPUT = inputSL$new(probeFile, controlFile, targetFile)
+    ####TO-DO#### EDIT SO THIS RETURNS AS VALID AND WE OFF TO A GOOD START.
     target <- readTargets(file = "0", path = targetPath)
     changeTargets(target)
     valid <- calculateValidGroups(getTargets())
