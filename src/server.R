@@ -7,6 +7,7 @@ library(vsn)
 library(ggplot2)
 library(RUnit)
 library(tools)
+library(R6)
 source("helpers/arrayQCRunner.R")
 source("helpers/helper.R")
 source("helpers/syntaxChecker.R")
@@ -25,24 +26,13 @@ source("global.R", local = FALSE)
 options(shiny.maxRequestSize = 130*1024^2)
 
 shinyServer(function(input, output) {
- 
-  probePath <- NULL
-  
+
   downloadReady <- FALSE
   
   isDownloadReady <- function(){
     return (downloadReady)
   }
-  
-  getProbePath <- function(){
-    return (probePath)
-  }
 
-  changeProbePath <- function(path){
-    probePath <<- path
-  }
-  
-  
   observe({
     #Vapply can force a return to logical
     mandatoryFilledDataset <-
@@ -55,32 +45,12 @@ shinyServer(function(input, output) {
     shinyjs::toggleState(id = 'fileSubmitter', condition = mandatoryFilledDataset)
   })
   
-  observeEvent(input$fileSubmitter, {
-  #Capture control probe information from input
-  # cat("starting to run file submit")
-  #  validate(
-  #    need(expr = TRUE, message = paste("Wrong file format. Try again!"))
-  #    ,"Failed")
-    
+  observeEvent(input$fileSubmitter, {    
     probeFile <- input$probeFile
     controlFile <- input$controlProbeFile
     targetFile <- input$targets
-    cat(probeFile$type, "\n")
-    cat(probeFile$datapath, "\n")
-    cat(probeFile$name, "\n")
-    #Save path names for manipulation
-    probePath <- probeFile$datapath
-    changeProbePath(probePath)
-    controlPath <- controlFile$datapath
-    targetPath <- targetFile$datapath
-    #Prep path names that will be used by Limma.
-    probePath <- substr(probePath, 1, nchar(probePath)-2)
-    controlPath <- substr(controlPath, 1, nchar(controlPath)-2)
-    targetPath <- substr(targetPath, 1, nchar(targetPath)-2)
-    #Read ilmn just like mom used to do.
+    inputSL = inputSL(probeFile, controlFile, targetFile)
     target <- readTargets(file = "0", path = targetPath)
-    x <- read.ilmn("0" , "0", path = probePath, ctrlpath = controlPath)
-    changeX(x)
     changeTargets(target)
     valid <- calculateValidGroups(getTargets())
     changeValidGroups(valid)

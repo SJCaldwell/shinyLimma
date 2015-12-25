@@ -5,15 +5,16 @@ datasets fit the format necessary to continue on with analysis.
 
 The input object will have an instance of both this and a datamanager"
 
-PATH <- 0
-NAME <- 1
-TYPE <- 2
 
-Validator <- R6Class("Validator",
+
+Validator = R6Class("Validator",
     public = list(
         validated = FALSE,
+        PATH = 0,
+        NAME = 1,
+        TYPE = 2,
                 
-        initialize <- function(probe, control, target){
+        initialize = function(probe, control, target){
 	        probeList   = validate.packer(probe)
 	        controlList = validate.packer(control)
 	        targetList  = validate.packer(target)
@@ -23,42 +24,42 @@ Validator <- R6Class("Validator",
 	        }
          },
                 
-        isValid <- function(){
+        isValid = function(){
             return (self$validated)
         },
 
-        validate.packer <- function(uploaded){
-		    toValidate = list(uploaded$datapath)
-			toValidate = list(toValidate, uploaded$name)
-			toValidate = list(toValidate, uploaded$type)
-			return (toValidate)
-		},
+        validate.packer = function(uploaded){
+		      toValidate = list(uploaded$datapath)
+			    toValidate = list(toValidate, uploaded$name)
+			    toValidate = list(toValidate, uploaded$type)
+			    return (toValidate)
+		    },
 
-        validate.delgator <- function(probe, control, targets){
-	        probePass   = validate.probe(probe[PATH], probe[NAME], probe[TYPE])
-	        controlPass = validate.control(control[PATH], control[NAME], control[TYPE])
-	        targetsPass = validate.targets(targets[PATH], targets[NAME], targets[TYPE])
+        validate.delgator = function(probe, control, targets){
+	        probePass   = validate.probe(probe[self$PATH], probe[self$NAME], probe[self$TYPE])
+	        controlPass = validate.control(control[self$PATH], control[self$NAME], control[self$TYPE])
+	        targetsPass = validate.targets(targets[self$PATH], targets[self$NAME], targets[self$TYPE])
 	        if(probePass && controlPass && targetsPass){
 		        return (TRUE)
 	        }
 	        return(FALSE)
         },
 
-        validate.probe <- function(filepath, filename, filetype){
+        validate.probe = function(filepath, filename, filetype){
 	        if (filetype != "text/plain"){
 		        return (FALSE)
 	        }
 	        return(TRUE)
         },
 
-        validate.control <- function(filepath, filename, filetype){
+        validate.control = function(filepath, filename, filetype){
 	        if(filetype != "text/plain"){
 		return (FALSE)
 	    }
 	    return(TRUE)
 },
 
-        validate.targets <- function(filepath, filename, filetype){
+        validate.targets = function(filepath, filename, filetype){
 	        if (filetype != "text/plain"){
 		        return (FALSE)
 	        }
