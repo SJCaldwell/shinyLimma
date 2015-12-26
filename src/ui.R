@@ -6,6 +6,9 @@ ui <- (tagList(
   shinyjs::useShinyjs(),
   tags$head(tags$link(rel = 'icon', href = "favicon.ico", type = "image/x-icon")),
   titlePanel(title = "", windowTitle = "Shiny-Limma!"),
+  tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.css")
+  ),
   navbarPage(title = a(href="http://shanecaldwell.info/2015/02/06/shinyLimma.html", "Shiny-Limma!"),
 ################################################################
 

@@ -81,7 +81,7 @@ shinyServer(function(input, output) {
     
     output$exploratoryPlot <- renderPlot({
       
-      plot <- getExploratoryPlot(input$exploreSelection, getX())
+      plot <- getExploratoryPlot(input$exploreSelection, userInput$dataManager$rawData)
       if (isnt.null(plot)){
         plot
       }
@@ -97,13 +97,12 @@ shinyServer(function(input, output) {
     
     ###############################################################
     output$rawPlot2 <- renderPlot({
-      boxplot(log2(x$E),range=0,ylab="log2 intensity")
+      boxplot(log2(userInput$dataManager$rawData$E),range=0,ylab="log2 intensity")
     })
   })
   
   observeEvent(input$preprocessingSubmitter, {
     USER_CUSTOM <- 4
-    x <- getX()
     if(input$backgroundCheckbox){
       x <-backgroundCorrect(x)
     }
