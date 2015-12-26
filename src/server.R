@@ -21,6 +21,7 @@ source("objects/datasetValidator.R")
 source("objects/rawArray.R")
 source("objects/normalizedArray.R")
 source("objects/inputSL.R")
+source("objects/metadata.R")
 source("global.R", local = FALSE)
 
 # setting this option. Here we'll raise limit to 130MB.
@@ -47,17 +48,10 @@ shinyServer(function(input, output) {
   })
   
   observeEvent(input$fileSubmitter, {    
-    probeFile <- input$probeFile
-    controlFile <- input$controlProbeFile
-    targetFile <- input$targets
-    INPUT = inputSL$new(probeFile, controlFile, targetFile)
+    userInput = inputSL$new(input$probeFile, input$controlProbeFile, input$targets)
+    userInput$loadTargetData(input$targets)
     ####TO-DO#### EDIT SO THIS RETURNS AS VALID AND WE OFF TO A GOOD START.
-    cat("targets tryin lol\n")
-    target <- readTargets(file = "0", path = targetPath)
-    changeTargets(target)
     cat("read targets")
-    valid <- calculateValidGroups(getTargets())
-    changeValidGroups(valid)
     cat("got to plotting\n")
     output$rawPlot <- renderPlot({
       progress <- shiny::Progress$new()
