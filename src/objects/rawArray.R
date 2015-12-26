@@ -12,6 +12,15 @@ rawArray = R6Class("rawArray",
 
 		rawMicroarray.getData = function(){
 			return (self$rawData)
+		},
+
+		plot = function(...){
+			  y <- melt(self$rawData$E)
+  			p2 <- ggplot(y, aes(x = value)) + geom_density( aes(group = X2, colour = X2), adjust=10) + xlim(0, 300)
+  			p2 <- p2 + labs(title = "Density of Probe Values")
+  			p2 <- p2 + labs(x = "Probes", y = "Density")
+  			p2 <- p2 + theme(legend.position= "none") + theme(plot.title = element_text(size = rel(1.3)))
+  			p2
 		}
   )     
 )

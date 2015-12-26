@@ -28,7 +28,6 @@ source("global.R", local = FALSE)
 options(shiny.maxRequestSize = 130*1024^2)
 
 shinyServer(function(input, output) {
-
   downloadReady <- FALSE
   
   isDownloadReady <- function(){
@@ -51,15 +50,12 @@ shinyServer(function(input, output) {
     userInput = inputSL$new(input$probeFile, input$controlProbeFile, input$targets)
     userInput$loadTargetData(input$targets)
     ####TO-DO#### EDIT SO THIS RETURNS AS VALID AND WE OFF TO A GOOD START.
-    cat("read targets")
-    cat("got to plotting\n")
     output$rawPlot <- renderPlot({
       progress <- shiny::Progress$new()
       on.exit(progress$close())
       progress$set(message = "Loading data... this may take a while...", value = 0.3)
-      plot <- densityPlotter(x)
       progress$set(message = "Almost done!", value = 1.0)
-      plot
+      plot(userInput)
   })
     ################################################################
     

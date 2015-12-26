@@ -31,7 +31,13 @@ inputSL = R6Class("inputSL",
 			targetPath = targetFile$datapath
 			targetPath = substr(targetPath, 1, nchar(targetPath)-2)
 			self$targetManager = metadata$new(targetPath)
+		},
+		
+		plot = function(...){
+			plot(self$dataManager)
 		}
+		
+		
 
 	)
 )
