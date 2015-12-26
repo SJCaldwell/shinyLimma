@@ -8,12 +8,11 @@ The input object will have an instance of both this and a datamanager"
 Validator = R6Class("Validator",
     public = list(
         validated = FALSE,
-        PATH = 0,
-        NAME = 1,
-        TYPE = 2,
+        PATH = 1,
+        NAME = 2,
+        TYPE = 3,
         
         initialize = function(probe, control, target){
-          cat("Begin creating dataset validator")
 	        probeList   = self$validate.packer(probe)
 	        controlList = self$validate.packer(control)
 	        targetList  = self$validate.packer(target)
@@ -22,7 +21,6 @@ Validator = R6Class("Validator",
 	        if (acceptableData){
 		        self$validated = TRUE
 	        }
-	        print(self)
          },
                 
         isValid = function(){
@@ -31,15 +29,15 @@ Validator = R6Class("Validator",
 
         validate.packer = function(uploaded){
 		      toValidate = list(uploaded$datapath)
-			    toValidate = list(toValidate, uploaded$name)
-			    toValidate = list(toValidate, uploaded$type)
+			    toValidate = append(toValidate, uploaded$name)
+			    toValidate = append(toValidate, uploaded$type)
 			    return (toValidate)
 		    },
 
 		    validate.delegator = function(probe, control, targets){
-	        probePass   = self$validate.probe(probe[self$PATH], probe[self$NAME], probe[self$TYPE])
-	        controlPass = self$validate.control(control[self$PATH], control[self$NAME], control[self$TYPE])
-	        targetsPass = self$validate.targets(targets[self$PATH], targets[self$NAME], targets[self$TYPE])
+	        probePass   = self$validate.probe(probe[[self$PATH]], probe[[self$NAME]], probe[[self$TYPE]])
+	        controlPass = self$validate.control(control[[self$PATH]], control[[self$NAME]], control[[self$TYPE]])
+	        targetsPass = self$validate.targets(targets[[self$PATH]], targets[[self$NAME]], targets[[self$TYPE]])
 	        if(probePass && controlPass && targetsPass){
 		        return (TRUE)
 	        }
@@ -55,16 +53,13 @@ Validator = R6Class("Validator",
 
         validate.control = function(filepath, filename, filetype){
 	        if(filetype != "text/plain"){
-		return (FALSE)
+				return (FALSE)
 	    }
-	    return(TRUE)
+	    	return(TRUE)
 },
 
         validate.targets = function(filepath, filename, filetype){
 	        if (filetype != "text/plain"){
-		        return (FALSE)
-	        }
-	        if (!("targets" %in% tolower(filename))){
 		        return (FALSE)
 	        }
 	        return(TRUE)

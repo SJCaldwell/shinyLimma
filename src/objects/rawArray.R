@@ -5,8 +5,9 @@ rawArray = R6Class("rawArray",
 		rawData = NULL,
 		initialize= function(probePath, controlPath){
 		  cat("attemping to apply ilmn/n")
+		  cat(probePath, "\n")
+		  cat(controlPath, "\n")
 		  self$rawData = read.ilmn("0" , "0", path = probePath, ctrlpath = controlPath)
-		  cat("applied ilmn!")
 		},
 
 		rawMicroarray.getData = function(){

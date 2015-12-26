@@ -52,11 +52,13 @@ shinyServer(function(input, output) {
     targetFile <- input$targets
     INPUT = inputSL$new(probeFile, controlFile, targetFile)
     ####TO-DO#### EDIT SO THIS RETURNS AS VALID AND WE OFF TO A GOOD START.
+    cat("targets tryin lol\n")
     target <- readTargets(file = "0", path = targetPath)
     changeTargets(target)
+    cat("read targets")
     valid <- calculateValidGroups(getTargets())
     changeValidGroups(valid)
-    
+    cat("got to plotting\n")
     output$rawPlot <- renderPlot({
       progress <- shiny::Progress$new()
       on.exit(progress$close())
