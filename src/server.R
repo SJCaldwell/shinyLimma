@@ -55,7 +55,7 @@ shinyServer(function(input, output) {
       on.exit(progress$close())
       progress$set(message = "Loading data... this may take a while...", value = 0.3)
       progress$set(message = "Almost done!", value = 1.0)
-      plot(userInput)
+      userInput$plot()
   })
     ################################################################
     

@@ -33,8 +33,9 @@ inputSL = R6Class("inputSL",
 			self$targetManager = metadata$new(targetPath)
 		},
 		
-		plot = function(...){
-			plot(self$dataManager)
+		plot = function(){
+		  cat("Call to datamanger")
+			return(self$dataManager$plot())
 		}
 		
 		
