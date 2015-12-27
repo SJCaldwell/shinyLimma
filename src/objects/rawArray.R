@@ -8,13 +8,14 @@ rawArray = R6Class("rawArray",
 		  cat(probePath, "\n")
 		  cat(controlPath, "\n")
 		  self$rawData = read.ilmn("0" , "0", path = probePath, ctrlpath = controlPath)
+		  cat("\n raw data is type ", typeof(self$rawData))
 		},
 
 		rawMicroarray.getData = function(){
 			return (self$rawData)
 		},
 
-		plot = function(){
+		densityPlot = function(){
 		    cat("\nplotting from rawArray class")
 			  y <- melt(self$rawData$E)
   			p2 <- ggplot(y, aes(x = value)) + geom_density( aes(group = X2, colour = X2), adjust=10) + xlim(0, 300)

@@ -33,6 +33,9 @@ shinyServer(function(input, output) {
   isDownloadReady <- function(){
     return (downloadReady)
   }
+  
+  userInput = NULL
+  userProcessed = NULL
 
   observe({
     #Vapply can force a return to logical
@@ -47,15 +50,13 @@ shinyServer(function(input, output) {
   })
   
   observeEvent(input$fileSubmitter, {    
-    userInput = inputSL$new(input$probeFile, input$controlProbeFile, input$targets)
-    userInput$loadTargetData(input$targets)
-    ####TO-DO#### EDIT SO THIS RETURNS AS VALID AND WE OFF TO A GOOD START.
+    userInput <<- inputSL$new(input$probeFile, input$controlProbeFile, input$targets)
     output$rawPlot <- renderPlot({
       progress <- shiny::Progress$new()
       on.exit(progress$close())
       progress$set(message = "Loading data... this may take a while...", value = 0.3)
       progress$set(message = "Almost done!", value = 1.0)
-      userInput$plot()
+      userInput$densityPlot()
   })
     ################################################################
     
@@ -64,7 +65,6 @@ shinyServer(function(input, output) {
     ###############################################################
 
     output$exploratoryText <- renderText({
-      
       if (input$exploreSelection == 1){
         paste("Choose the exploratory analysis technique")
       }
@@ -76,7 +76,6 @@ shinyServer(function(input, output) {
       else if(input$exploreSelection == 3){
         paste("Displaying boxplot of Raw Data")
       }
-      
     })
     
     output$exploratoryPlot <- renderPlot({
@@ -102,26 +101,24 @@ shinyServer(function(input, output) {
   })
   
   observeEvent(input$preprocessingSubmitter, {
-    USER_CUSTOM <- 4
-    if(input$backgroundCheckbox){
-      x <-backgroundCorrect(x)
-    }
-    x <- normalization(x, input$normalizationSelection)
-    filter_level <- as.numeric(input$filteringSelection)
-    ratio  <-  round(ncol(x) * (as.numeric(input$ratioSelection)))
+    USER_CUSTOM = 4
+    bgCorrect = input$backgroundCheckbox
+    #x = normalization(x, input$normalizationSelection)
+    filter_level = as.numeric(input$filteringSelection)
+    ratio  =  round(ncol(x) * (as.numeric(input$ratioSelection)))
     if(input$filteringSelection == USER_CUSTOM){
-      filter_level <- as.numeric(input$filterSlider)/100
+      filter_level = as.numeric(input$filterSlider)/100
     }
     if(input$ratioSelection == USER_CUSTOM){
-      ratio  <- round(ncol(x) * (as.numeric(input$ratioSlider)/100))
+      ratio  = round(ncol(x) * (as.numeric(input$ratioSlider)/100))
     }
-    expressed <- rowSums(x$other$Detection < filter_level) >= ratio
-    x<- x[expressed,]
-    changeY(x)
-    y <- getY()
+    cat("userInput is of type", typeof(userInput))
+    userProcessed = normalizedArray$new(userInput$dataManager$rawData, input$normalizationSelection, filter_level, ratio, bgCorrect)
+    userProcessed$normalize()
+    userProcessed <<- userProcessed
     
     output$preprocessingPlot <- renderPlot({
-      boxplot(log2(y$E),range=0,ylab="log2 intensity")
+      userProcessed$boxplot()
     })
 
   })
@@ -174,7 +171,6 @@ shinyServer(function(input, output) {
     if (input$analysisSelection == 2){
       topTable(getEfit(), adjust.method = "fdr")
     }else{
-      NULL
     }
   })
   
@@ -187,7 +183,6 @@ shinyServer(function(input, output) {
     down <- vennCounts(criteria, include = "down")[4]
     ScaledVennDiagram(up, down)
     }else{
-      NULL
     }
   })
   
@@ -196,7 +191,6 @@ shinyServer(function(input, output) {
     NUM_GENES <- nrow(getEfit())
     topTable(getEfit(), number = NUM_GENES)
     }else{
-      NULL
     }
   })
   #######TO-DO#########

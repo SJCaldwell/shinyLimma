@@ -18,12 +18,13 @@ normalizedArray <- R6Class("rawArray",
 		},
 
 		normalize = function(){
-			normData = method.parser(self$rawData, self$method)
-			normData = pdetection.filter(normData, self$filter_level, self$ratio)
+		  normData = self$background_Correct(self$rawData)
+			normData = self$methodParser(normData, self$method)
+			normData = self$pdetectionFilter(normData, self$filter_level, self$ratio)
 			self$normalizedData = normData 
 		},
 
-		method.parser = function(data, style){
+		methodParser = function(data, style){
 			NONE  = 1 
 			VSN   = 2
 			LOGQ  = 3
@@ -47,16 +48,24 @@ normalizedArray <- R6Class("rawArray",
 		},
 
 		##TODO: ADD ACTUAL BACKGROUND CORRECTION
-		background.correct = function(data){
+		background_Correct = function(data){
 			if (self$bgCorrect){
+			  return (backgroundCorrect(data))
 			}
 			return (data)
 		},
 
-		pdetection.filter = function(normData, filter_level, ratio){
+		pdetectionFilter = function(normData, filter_level, ratio){
 			expressed = rowSums(normData$other$Detection < filter_level) >= ratio
 			normData = normData[expressed,]
 			return (normData)
+		},
+		
+		boxplot = function(){
+		  toPlot = self$normalizedData
+		  cat("Type of expression data is ", typeof(toPlot), "\n\n")
+		  summary(toPlot)
+		  return(boxplot(log2(toPlot$E),range=0,ylab="log2 intensity"))
 		}
 
 	)
