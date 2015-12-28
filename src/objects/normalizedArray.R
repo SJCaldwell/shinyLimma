@@ -1,5 +1,4 @@
 library(limma)
-library(convert)
 normalizedArray <- R6Class("rawArray",
 	public = list(
 		rawData = NULL,
@@ -8,6 +7,9 @@ normalizedArray <- R6Class("rawArray",
 		filter_level = NULL,
 		ratio = NULL, 
 		bgCorrect = NULL,
+
+		before = NULL,
+		after = NULL,
 
 		initialize = function(rawData, method, filter_level, ratio, bgCorrect = FALSE){
 			self$rawData = rawData
@@ -23,6 +25,7 @@ normalizedArray <- R6Class("rawArray",
 			normData = self$methodParser(self$rawData, self$method)
 			normData = self$pdetectionFilter(normData, self$filter_level, self$ratio)
 			self$normalizedData = normData
+			self$before = nrow(normData)
 		},
 
 		methodParser = function(data, style){
@@ -59,12 +62,25 @@ normalizedArray <- R6Class("rawArray",
 		pdetectionFilter = function(normData, filter_level, ratio){
 			expressed = rowSums(normData$other$Detection < filter_level) >= ratio
 			normData = normData[expressed,]
+			self$after = nrow(normData)
 			return (normData)
 		},
 		
 		boxplot = function(){
 		  toPlot = self$normalizedData$E
 		  return(boxplot(log2(toPlot),range=0,ylab="log2 intensity"))
+		},
+
+		probeFilterPlot = function(){
+			twovals = c(self$before, self$after)
+			names(twovals) = c("Before Filter", "After Filter")
+			twovals = as.data.frame(twovals)
+			colnames(twovals) = "Probe Count"
+			twovals = cbind(twovals, rownames(twovals))
+			colnames(twovals) = c("Probe Count", "Status")
+			d = ggplot(data= twovals, aes(x = Status, y = probeCount, colour = Status))
+			d = d + geom_bar(stat = "identity", width = .5)
+			return(d)
 		}
 
 	)
