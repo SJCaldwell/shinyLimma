@@ -108,12 +108,13 @@ shinyServer(function(input, output) {
       USER_CUSTOM = 4
       bgCorrect = input$backgroundCheckbox
       filter_level = as.numeric(input$filteringSelection)
-      ratio  =  round(ncol(x) * (as.numeric(input$ratioSelection)))
+      ratio  =  round(ncol(userInput$dataManager$rawData) * (as.numeric(input$ratioSelection)))
+      cat(ratio)
       if(input$filteringSelection == USER_CUSTOM){
           filter_level = as.numeric(input$filterSlider)/100
     }
       if(input$ratioSelection == USER_CUSTOM){
-          ratio  = round(ncol(x) * (as.numeric(input$ratioSlider)/100))
+          ratio  = round(ncol(userInput$dataManager$rawData) * (as.numeric(input$ratioSlider)/100))
     }
     userProcessed = normalizedArray$new(userInput$dataManager$rawData, input$normalizationSelection, filter_level, ratio, bgCorrect)
     userProcessed <<- userProcessed
@@ -158,7 +159,7 @@ shinyServer(function(input, output) {
   output$topTable <- renderDataTable({
     
     if (input$analysisSelection == 2){
-      topTable(getEfit(), adjust.method = "fdr")
+      completedAnalysis$topGeneTable()
     }else{
     }
   })

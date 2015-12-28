@@ -19,10 +19,10 @@ normalizedArray <- R6Class("rawArray",
 		},
 
 		normalize = function(){
-		  normData = self$background_Correct(self$rawData)
-			normData = self$methodParser(normData, self$method)
+		  	normData = self$background_Correct(self$rawData)
+			normData = self$methodParser(self$rawData, self$method)
 			normData = self$pdetectionFilter(normData, self$filter_level, self$ratio)
-			self$normalizedData = as(normData, "EList") 
+			self$normalizedData = normData
 		},
 
 		methodParser = function(data, style){
