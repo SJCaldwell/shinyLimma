@@ -22,6 +22,7 @@ source("objects/rawArray.R")
 source("objects/normalizedArray.R")
 source("objects/inputSL.R")
 source("objects/metadata.R")
+source("objects/exp_design.R")
 source("global.R", local = FALSE)
 
 # setting this option. Here we'll raise limit to 130MB.
@@ -36,6 +37,7 @@ shinyServer(function(input, output) {
   
   userInput = NULL
   userProcessed = NULL
+  userDesign = NULL
 
   observe({
     #Vapply can force a return to logical
@@ -114,7 +116,6 @@ shinyServer(function(input, output) {
     }
     cat("userInput is of type", typeof(userInput))
     userProcessed = normalizedArray$new(userInput$dataManager$rawData, input$normalizationSelection, filter_level, ratio, bgCorrect)
-    userProcessed$normalize()
     userProcessed <<- userProcessed
     
     output$preprocessingPlot <- renderPlot({
@@ -128,25 +129,21 @@ shinyServer(function(input, output) {
   
   ###############################################################  
   observeEvent(input$contrastSubmitter, {
-      group1Syntax <- input$group1Contrast
-      group2Syntax <- input$group2Contrast
-      goodSyntax <- CMSyntaxChecker(group1Syntax, group2Syntax)
-      if (goodSyntax){
-        computeMatrix(group1Syntax, group2Syntax, corr = NULL)
-        changeGroup1(group1Syntax)
-        changeGroup2(group2Syntax)
+      userDesign <<- exp_design$new(input$group1Contrast, input$group2Contrast, userInput$targetManager$validGroups, userInput$targetManager$targets)
+      if (userDesign$validSyntax){
+        cat("\nwe str8 contrast design works")
       }else{
         cat("\nTO-DO:\nSomehow the console should display this is a problem and that the user should try again.")
       }
   })
   
   output$targetsTable <- renderDataTable({
-  toDisplay <- getTargets()
-  if(isnt.null(toDisplay)){
-    toDisplay <- as.data.frame(toDisplay)
-    toDisplay
-    }
-    })  
+        cat("Attempt to render targets table\n")
+      if(isnt.null(userInput)){
+          toDisplay <- as.data.frame(userInput$targetManager$targets)
+          toDisplay 
+      }
+  })  
     ################################################################
     
     #### SERVER-SIDE code for ANALYSIS section HERE####

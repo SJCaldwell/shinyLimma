@@ -1,5 +1,5 @@
 library(limma)
-
+library(convert)
 normalizedArray <- R6Class("rawArray",
 	public = list(
 		rawData = NULL,
@@ -15,6 +15,7 @@ normalizedArray <- R6Class("rawArray",
 			self$filter_level = filter_level
 			self$method = method
 			self$bgCorrect = bgCorrect
+			self$normalize()
 		},
 
 		normalize = function(){
@@ -62,10 +63,8 @@ normalizedArray <- R6Class("rawArray",
 		},
 		
 		boxplot = function(){
-		  toPlot = self$normalizedData
-		  cat("Type of expression data is ", typeof(toPlot), "\n\n")
-		  summary(toPlot)
-		  return(boxplot(log2(toPlot$E),range=0,ylab="log2 intensity"))
+		  toPlot = self$normalizedData$E
+		  return(boxplot(log2(toPlot),range=0,ylab="log2 intensity"))
 		}
 
 	)
