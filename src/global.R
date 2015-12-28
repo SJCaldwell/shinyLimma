@@ -2,75 +2,6 @@
 fieldsMandatoryDataset <- c("probeFile", "targets", "controlProbeFile")
 fieldsMandatoryRunModel <- c("group1Syntax", "group2Syntax")
 
-y <- NULL
-
-changeY <- function(y){
-  y <<- y
-}
-getY <- function(){
-  return (y)
-}
-
-x <- NULL
-
-changeX <- function(x){
-  x <<- x
-}
-
-getX <- function(){
-  return (x)
-}
-
-probeFile <- NULL
-
-changeProbeFile <- function(probeName){
-  probeFile <<- probeName
-}
-
-getProbeFile <- function(){
-  return(probeFile)
-}
-
-controlProbeFile <- NULL
-
-changeControlProbeFile <- function(controlProbeName){
-  controlProbeFile <<- controlProbeName
-}
-
-getControlProbeFile <- function(){
-  return(controlProbeFile)
-}
-
-targetPath <- NULL
-
-changeTargetPath <- function(target_file_path){
-  targetPath <<- target_file_path
-}
-
-getTargetPath <- function(){
-  return(targetPath)
-}
-
-filter_level <- NULL
-
-changeFilterLevel <- function(filter){
-  filter_level <<- filter
-}
-
-getFilterLevel <- function(){
-  return(filter_level)
-}
-
-ratio <- NULL
-
-changeRatio <- function(ratio){
-  ratio <<- ratio
-}
-
-getRatio <- function(){
-  return (ratio)
-}
-
 correlationChoice <-FALSE
 
 changeCorrelationChoice <- function(choice){
@@ -91,69 +22,13 @@ getDownload <- function(){
   return (download)
 }
 
-targets <- NULL
-
-changeTargets <- function(t){
-	targets <<- t
-}
-
-getTargets <- function(){
-    return (targets)
-}
-
 
 isnt.null <- function(x) !is.null(x)
 
 
-
-design <- NULL
-
-changeDesign <- function(DESIGN){
-  design <<- DESIGN
-}
-
-getDesign <- function(){
-  return (design)
-}
-
 getTutorial <- function(){
   return (tutorial)
 }
-
-Group1 <- NULL
-getGroup1 <- function(){
-  return (Group1)
-}
-
-changeGroup1 <- function(group1){
-  Group1 <<- group1
-}
-
-Group2 <- NULL
-getGroup2 <- function(){
-  return (Group2)
-}
-
-changeGroup2 <- function(group2){
-  Group2 <<- group2
-}
-
-getGroup <- function(){
-  toEval <- (c(getGroup1(), "-", getGroup2()))
-  toEval <- paste(toEval, sep = "", collapse = "")
-  return (toEval)
-}
-
-Efit <- NULL
-
-getEfit <- function(){
-  return (Efit)
-}
-
-changeEfit <- function(efit){
-  Efit <<- efit
-}
-
 
 tutorial <- '<!DOCTYPE html>
 <html>
