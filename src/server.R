@@ -167,19 +167,14 @@ shinyServer(function(input, output) {
   output$vennDiagram <- renderPlot({
     
     if(input$analysisSelection == 3){
-    Efit <- getEfit()
-    criteria <- decideTests(Efit)
-    up <- vennCounts(criteria, include = "up")[4]
-    down <- vennCounts(criteria, include = "down")[4]
-    ScaledVennDiagram(up, down)
+    completedAnalysis$scaledDiagram()
     }else{
     }
   })
   
   output$geneTable <- renderDataTable({
     if(input$analysisSelection == 4){
-    NUM_GENES <- nrow(getEfit())
-    topTable(getEfit(), number = NUM_GENES)
+      completedAnalysis$allGeneTable()
     }else{
     }
   })

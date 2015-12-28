@@ -22,7 +22,7 @@ colnames(design) <-levels(as.factor(GEC)
 fit <-lmFit(normExpression, design, block = targets$Donor)
 cont.matrix <- makeContrasts(
 
-  contrast = (Air-CSE),
+  contrast = (-),
 levels = design)
 
 fit2 <- contrasts.fit(fit, cont.matrix)
