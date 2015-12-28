@@ -23,6 +23,7 @@ source("objects/normalizedArray.R")
 source("objects/inputSL.R")
 source("objects/metadata.R")
 source("objects/exp_design.R")
+source("objects/differentialExpression.R")
 source("global.R", local = FALSE)
 
 # setting this option. Here we'll raise limit to 130MB.
@@ -34,10 +35,11 @@ shinyServer(function(input, output) {
   isDownloadReady <- function(){
     return (downloadReady)
   }
-  
+  #Globals that will represent the user input.
   userInput = NULL
   userProcessed = NULL
   userDesign = NULL
+  completedAnalysis = NULL
 
   observe({
     #Vapply can force a return to logical
@@ -103,18 +105,16 @@ shinyServer(function(input, output) {
   })
   
   observeEvent(input$preprocessingSubmitter, {
-    USER_CUSTOM = 4
-    bgCorrect = input$backgroundCheckbox
-    #x = normalization(x, input$normalizationSelection)
-    filter_level = as.numeric(input$filteringSelection)
-    ratio  =  round(ncol(x) * (as.numeric(input$ratioSelection)))
-    if(input$filteringSelection == USER_CUSTOM){
-      filter_level = as.numeric(input$filterSlider)/100
+      USER_CUSTOM = 4
+      bgCorrect = input$backgroundCheckbox
+      filter_level = as.numeric(input$filteringSelection)
+      ratio  =  round(ncol(x) * (as.numeric(input$ratioSelection)))
+      if(input$filteringSelection == USER_CUSTOM){
+          filter_level = as.numeric(input$filterSlider)/100
     }
-    if(input$ratioSelection == USER_CUSTOM){
-      ratio  = round(ncol(x) * (as.numeric(input$ratioSlider)/100))
+      if(input$ratioSelection == USER_CUSTOM){
+          ratio  = round(ncol(x) * (as.numeric(input$ratioSlider)/100))
     }
-    cat("userInput is of type", typeof(userInput))
     userProcessed = normalizedArray$new(userInput$dataManager$rawData, input$normalizationSelection, filter_level, ratio, bgCorrect)
     userProcessed <<- userProcessed
     
@@ -150,16 +150,8 @@ shinyServer(function(input, output) {
     
     ###############################################################
   observeEvent(input$analysisSubmitter, {
-    design <- getDesign()
-    fit <- lmFit(getY(), design)
-    toContrast <- getGroup()
-    cont.matrix <- makeContrasts(
-      contrasts = (toContrast),
-      levels = design
-    )
-    fit2 <- contrasts.fit(fit, cont.matrix)
-    EFit <- eBayes(fit2)
-    changeEfit(EFit)
+    completedAnalysis <<- differentialExpression$new(userDesign$contrastMatrix, 
+                                    userProcessed$normalizedData, userDesign$designExpression)
     downloadReady <<- TRUE
   })
     
