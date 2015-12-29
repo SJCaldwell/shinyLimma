@@ -152,13 +152,26 @@ tabPanel("Preprocessing",
                  ),
 
     mainPanel(
+      fluidRow(
+        column(5, offset = 1,
+      
       h4("Before Preprocessing"),
       plotOutput("rawPlot2"),
       h4("After Preprocessing"),
       plotOutput("preprocessingPlot")
+        ),
+      column(5, offset = 1,
+             
+             h4("Filtering Results"),
+             plotOutput("filteringResults"),
+             br(),
+             br(),
+             actionButton("refilterButton", "Try out new filtering settings")
 
-            )
-              )
+      )
+    )
+  )
+)
 ),
 
 ################################################################

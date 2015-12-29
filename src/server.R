@@ -109,7 +109,6 @@ shinyServer(function(input, output) {
       bgCorrect = input$backgroundCheckbox
       filter_level = as.numeric(input$filteringSelection)
       ratio  =  round(ncol(userInput$dataManager$rawData) * (as.numeric(input$ratioSelection)))
-      cat(ratio)
       if(input$filteringSelection == USER_CUSTOM){
           filter_level = as.numeric(input$filterSlider)/100
     }
@@ -122,7 +121,23 @@ shinyServer(function(input, output) {
     output$preprocessingPlot <- renderPlot({
       userProcessed$boxplot()
     })
+    
+    output$filteringResults <- renderPlot({
+      userProcessed$probeFilterPlot()
+    })
 
+  })
+  
+  observeEvent(input$refilterButton, {
+    userProcessed$
+    if(isnt.null(userProcessed)){
+        output$filteringResults <- renderPlot({
+        userProcessed$probeFilterPlot()
+      })
+      
+    }else{
+      NULL
+    }
   })
   ################################################################
   

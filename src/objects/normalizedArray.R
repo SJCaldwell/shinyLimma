@@ -7,7 +7,6 @@ normalizedArray <- R6Class("rawArray",
 		filter_level = NULL,
 		ratio = NULL, 
 		bgCorrect = NULL,
-
 		before = NULL,
 		after = NULL,
 
@@ -21,11 +20,11 @@ normalizedArray <- R6Class("rawArray",
 		},
 
 		normalize = function(){
-		  	normData = self$background_Correct(self$rawData)
-			normData = self$methodParser(self$rawData, self$method)
+		  normData = self$background_Correct(self$rawData)
+			normData = self$methodParser(normData, self$method)
+			self$before = nrow(normData)
 			normData = self$pdetectionFilter(normData, self$filter_level, self$ratio)
 			self$normalizedData = normData
-			self$before = nrow(normData)
 		},
 
 		methodParser = function(data, style){
@@ -77,8 +76,8 @@ normalizedArray <- R6Class("rawArray",
 			twovals = as.data.frame(twovals)
 			colnames(twovals) = "Probe Count"
 			twovals = cbind(twovals, rownames(twovals))
-			colnames(twovals) = c("Probe Count", "Status")
-			d = ggplot(data= twovals, aes(x = Status, y = probeCount, colour = Status))
+			colnames(twovals) = c("Probe_Count", "Status")
+			d = ggplot(data= twovals, aes(x = Status, y = Probe_Count, colour = Status))
 			d = d + geom_bar(stat = "identity", width = .5)
 			return(d)
 		}
