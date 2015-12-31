@@ -129,10 +129,19 @@ shinyServer(function(input, output) {
   })
   
   observeEvent(input$refilterButton, {
-    userProcessed$
     if(isnt.null(userProcessed)){
         output$filteringResults <- renderPlot({
-        userProcessed$probeFilterPlot()
+          USER_CUSTOM = 4
+          filter_level = as.numeric(input$filteringSelection)
+          ratio  =  round(ncol(userInput$dataManager$rawData) * (as.numeric(input$ratioSelection)))
+          if(input$filteringSelection == USER_CUSTOM){
+            filter_level = as.numeric(input$filterSlider)/100
+          }
+          if(input$ratioSelection == USER_CUSTOM){
+            ratio  = round(ncol(userInput$dataManager$rawData) * (as.numeric(input$ratioSlider)/100))
+          }
+          userProcessed$pdetectionFilter(userProcessed$rawData, filter_level, ratio)
+          userProcessed$probeFilterPlot()
       })
       
     }else{
