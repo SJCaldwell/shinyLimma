@@ -2,8 +2,8 @@
 title:
 email: shane.caldwell12@ncf.edu
 description: The best web application for bioinformatics you've never used.
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "" # the base hostname & protocol for your site
+baseurl: "/shinyLimma/" # the subpath of your site, e.g. /blog/
+url: "www.shanecaldwell.info" # the base hostname & protocol for your site
 
 twitter_username: coffeeDevRepeat
 github_username: SJCaldwell
