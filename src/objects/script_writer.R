@@ -3,11 +3,10 @@ script_writer <- R6Class("script_writer",
 
 		input = NULL,
 		preprocessing = NULL,
-		contast = NULL,
+		contrast = NULL,
 		analysis = NULL,
  
 		initialize = function(input, preprocessing, contrast, analysis){
-			cat("I'm in the fucking builder\n")
 			self$input = input
 			self$preprocessing = preprocessing
 			self$contrast = contrast
@@ -76,7 +75,6 @@ script_writer <- R6Class("script_writer",
 			VSN   = 2
 			LOGQ  = 3
 			LOESS = 4
-			cat("normExpression <- normalizeVSN(rawExpression)\n")
 			if (style == NONE){
 				cat("normExpression <- rawExpression\n")
 			}
