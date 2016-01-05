@@ -206,7 +206,6 @@ shinyServer(function(input, output) {
  
   observeEvent(input$codeDownloader, {
       scripter <<- script_writer$new(userInput, userProcessed, userDesign, completedAnalysis)
-      cat("scriptwriter object built \n")
       scripter$output_script()
     })
 })

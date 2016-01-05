@@ -2,28 +2,27 @@ library(limma)
 library(statmod)
 library(fdrtool)
 
-probeData <- 'lungprobe.txt'
-CtrlProbe <- 'controlprobe.txt'
-filepath <- 'desktop/shinyLimma'
+filepath <- 'probe.txt'
 setwd(filepath)
+probeData <- 'controlProbe.txt'
+CtrlProbe <- 'okay'
 targets <- readTargets()
-rawExpression <- read.ilmn(files = probeData, ctrlfiles = CtrlProbe, 
-						probeid="ProbeID", other.columns = "Detection")
+rawExpression <- read.ilmn(files = probeData, ctrlfiles = CtrlProbe, probeid="ProbeID", other.columns = "Detection")
 rawExpression <- backgroundCorrect(rawExpression, method = 'half')
-passedQC <- rowSums(rawExpression$other$Detection <= 15) >= 20)
-normExpression <- normalizeVSN(rawExpression)
+passedQC <- rowSums(rawExpression$other$Detection <=0.05) >= 1)
+normExpression <- neqc(rawExpression)
 normExpression <- normExpression[passedQC,]
 NAMES <- 1
 geneTable <- normExpression$genes
 geneList <- geneNames[[NAMES]]
 normExpression <- avereps(normExpression, ID = geneList
-GEC <- paste(targets$Genotype, targets$Exp_Cont, targets$CSE, sep = "."
+GEC <- paste(targets$lol, targets$Exp_Cont, targets$CSE, sep = "."
 design <- model.matrix(~0+GEC)
 colnames(design) <-levels(as.factor(GEC)
-fit <-lmFit(normExpression, design, block = targets$)
+fit <-lmFit(normExpression, design, block = targets$Donor)
 cont.matrix <- makeContrasts(
-contrast = (-),
-levels = design)
+	contrast = (Air-CSE),
+	levels = design)
 
 fit2 <- contrasts.fit(fit, cont.matrix)
 fit2<-eBayes(fit2)
