@@ -40,7 +40,7 @@ shinyServer(function(input, output) {
   userProcessed = NULL
   userDesign = NULL
   completedAnalysis = NULL
-  script_writer = NULL
+  scripter = NULL
 
   observe({
     #Vapply can force a return to logical
@@ -205,9 +205,8 @@ shinyServer(function(input, output) {
   })
  
   observeEvent(input$codeDownloader, {
-      cat("building scriptwriter object \n")
-      script_writer <<- script_writer$new(userInput, userProcessed, userDesign, completedAnalysis)
+      scripter <<- script_writer$new(userInput, userProcessed, userDesign, completedAnalysis)
       cat("scriptwriter object built \n")
-      script_writer$output_script()
+      scripter$output_script()
     })
 })

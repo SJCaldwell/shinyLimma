@@ -34,7 +34,6 @@ script_writer <- R6Class("script_writer",
 			#Wont be normalize VSN everytime
 			#Add some logic here that determines which normalization was chosen
 			self$normalization_handler()
-			cat("normExpression <- normalizeVSN(rawExpression)\n")
 			cat("normExpression <- normExpression[passedQC,]\n")
 			#Get rid of magic numbers
 			cat("NAMES <- 1\n")
@@ -59,9 +58,9 @@ script_writer <- R6Class("script_writer",
     		}else{
     			cat(")\n", sep = "")
     		}
-			cat("cont.matrix <- makeContrasts(\n
-  				contrast = (", self$groupAsyntax, '-', self$groupBsyntax,'),\n',
-  				'levels = design)\n\n', sep = "")
+			cat("cont.matrix <- makeContrasts(\n")
+  		cat("\tcontrast = (", self$contrast$groupAsyntax, '-', self$contrast$groupBsyntax,'),\n', sep = "")
+  	  cat('\tlevels = design)\n\n', sep = "")
 			cat("fit2 <- contrasts.fit(fit, cont.matrix)\n")
 			cat("fit2<-eBayes(fit2)\n")
 			cat("topTable(fit2, adjust.method = 'fdr')\n")
@@ -71,6 +70,7 @@ script_writer <- R6Class("script_writer",
 
 		normalization_handler = function(){
 			style = self$preprocessing$method
+			cat(style, "\n")
 			NONE  = 1 
 			VSN   = 2
 			LOGQ  = 3
