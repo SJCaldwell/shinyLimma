@@ -15,7 +15,6 @@ source("helpers/limmaTool_Functions.R")
 source("helpers/ggplotBoxPlotForArrays.R")
 source("helpers/HeatmapRunner.R")
 source("helpers/normalization.R")
-source("helpers/script_writer.R")
 source("helpers/scaledVennDiagram.R")
 source("objects/datasetValidator.R")
 source("objects/rawArray.R")
@@ -24,6 +23,7 @@ source("objects/inputSL.R")
 source("objects/metadata.R")
 source("objects/exp_design.R")
 source("objects/differentialExpression.R")
+source("objects/script_writer.R")
 source("global.R", local = FALSE)
 
 # setting this option. Here we'll raise limit to 130MB.
@@ -40,6 +40,7 @@ shinyServer(function(input, output) {
   userProcessed = NULL
   userDesign = NULL
   completedAnalysis = NULL
+  script_writer = NULL
 
   observe({
     #Vapply can force a return to logical
@@ -202,14 +203,11 @@ shinyServer(function(input, output) {
     }else{
     }
   })
-  #######TO-DO#########
-  #Filter by p.value, adjusted p-value
-  #Venn-Diagram 
-  #Volcano Plot
-  #######TO-DO#########
+ 
   observeEvent(input$codeDownloader, {
-    if(isDownloadReady()){
-    writeScript()
-    }
+      cat("building scriptwriter object \n")
+      script_writer <<- script_writer$new(userInput, userProcessed, userDesign, completedAnalysis)
+      cat("scriptwriter object built \n")
+      script_writer$output_script()
     })
 })

@@ -19,7 +19,6 @@ exp_design = R6Class("exp_design",
 			}
 
 		},
-#SECOND FOR LOOP WRONG. DETERMINE SOURCE OF PROBLEM. CHECK GITHUB FILE FOR MOST RECENT IMPLEMTNATION
 		computeContrastMatrix = function(targets){
 			if (self$validSyntax){
 				typesToInclude = strsplit(self$groupAsyntax, ".", fixed = TRUE)
@@ -37,7 +36,6 @@ exp_design = R6Class("exp_design",
       					type = design[[i]]
       					exp_types = paste(exp_types, targets[[type]], sep = ".")
     				}
-  				  cat("Second for loop complete")
   				}
   				exp_matrix = model.matrix(~0+exp_types)
   				colnames(exp_matrix) = levels(as.factor(exp_types))
