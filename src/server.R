@@ -208,4 +208,11 @@ shinyServer(function(input, output) {
       scripter <<- script_writer$new(userInput, userProcessed, userDesign, completedAnalysis)
       scripter$output_script()
     })
+####EXPERIMENTAL####
+  output$saveStateNav <- donwnloadHandler(
+    filename = function() {paste0("radiant-state-",Sys.date(),".rda")}
+    content = function(file){
+      saveState(file)
+      }
+    )
 })
