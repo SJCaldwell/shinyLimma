@@ -209,7 +209,13 @@ shinyServer(function(input, output) {
         paste('script-', Sys.Date(), '.R', sep ='')
       },
       content = function(con){
-        writeLines((toString(script_writer$new(userInput, userProcessed, userDesign, completedAnalysis))$output_script), con)
+        scripter <<- script_writer$new(userInput, userProcessed, userDesign, completedAnalysis)
+        code <- scripter$output_script()
+        cat("\nBRUH TYPE OF CODE IS\n")
+        cat(typeof(code))
+        cat("\n")
+        cat(code)
+        writeLines(code, con)
       }
     )
 ####EXPERIMENTAL####
