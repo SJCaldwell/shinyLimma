@@ -209,7 +209,7 @@ shinyServer(function(input, output) {
         paste('script-', Sys.Date(), '.R', sep ='')
       },
       content = function(con){
-        writeLines(c("Dank","Memesssss"), con)
+        writeLines((toString(script_writer$new(userInput, userProcessed, userDesign, completedAnalysis))$output_script), con)
       }
     )
 ####EXPERIMENTAL####
