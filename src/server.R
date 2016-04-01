@@ -204,13 +204,18 @@ shinyServer(function(input, output) {
     }
   })
  
-  observeEvent(input$codeDownloader, {
-      scripter <<- script_writer$new(userInput, userProcessed, userDesign, completedAnalysis)
-      scripter$output_script()
-    })
+  output$codeDownloader <- downloadHandler(
+      filename = function(){
+        paste('script-', Sys.Date(), '.R', sep ='')
+      },
+      content = function(con){
+        writeLines(c("Dank","Memesssss"), con)
+      }
+    )
 ####EXPERIMENTAL####
-  output$saveStateNav <- donwnloadHandler(
-    filename = function() {paste0("radiant-state-",Sys.date(),".rda")}
+  output$saveStateNav <- downloadHandler(
+    filename = function() {paste0("radiant-state-",Sys.date(),".rda")
+    },
     content = function(file){
       saveState(file)
       }

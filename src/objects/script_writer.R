@@ -14,7 +14,6 @@ script_writer <- R6Class("script_writer",
 		},
 
 		output_script = function(){
-			sink("research.R")
 			cat("library(limma)\n")
 			cat("library(statmod)\n")
 			cat("library(fdrtool)\n\n")

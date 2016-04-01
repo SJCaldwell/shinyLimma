@@ -44,16 +44,3 @@ tutorial <- '<!DOCTYPE html>
   </body>
   </html>
   '
-    observeEvent(input$save, {
-      values <<- lapply(reactiveValuesToList(input), unclass)
-    })
-
-    observeEvent(input$load, {
-      if (exists("values")) {
-       lapply(names(values),
-              function(x) session$sendInputMessage(x, list(value = values[[x]]))
-              )
-      }
-    })
-  }
-)
