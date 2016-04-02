@@ -214,7 +214,6 @@ shinyServer(function(input, output) {
         cat("\nBRUH TYPE OF CODE IS\n")
         cat(typeof(code))
         cat("\n")
-        cat(code)
         writeLines(code, con)
       }
     )
