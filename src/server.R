@@ -190,9 +190,10 @@ shinyServer(function(input, output) {
     }
     
     if (input$analysisSelection == 2){
-      completedAnalysis$topGeneTable()
+      hide("vennDiagram")
+      hide("geneTable")
       toggle("topTable")
-
+      completedAnalysis$topGeneTable()
     }else{
     }
   })
@@ -200,18 +201,21 @@ shinyServer(function(input, output) {
   output$vennDiagram <- renderPlot({
     
     if(input$analysisSelection == 3){
-    hide("topTable")
-    hide("geneTable")
-    completedAnalysis$scaledDiagram()
-    toggle("vennDiagram")
+      completedAnalysis$scaledDiagram()
+      hide("topTable")
+      hide("geneTable")
+      toggle("vennDiagram")
     }else{
     }
   })
   
   output$geneTable <- renderDataTable({
     if(input$analysisSelection == 4){
-      completedAnalysis$allGeneTable()
+      hide("topTable")
+      hide("vennDiagram")
       toggle("geneTable")
+      completedAnalysis$allGeneTable()
+
     }else{
     }
   })
