@@ -164,7 +164,7 @@ shinyServer(function(input, output) {
   })
   
   output$targetsTable <- renderDataTable({
-        cat("Attempt to render targets table\n")
+    cat("attempting to display targets table")
       if(isnt.null(userInput)){
           toDisplay <- as.data.frame(userInput$targetManager$targets)
           toDisplay 
@@ -182,9 +182,17 @@ shinyServer(function(input, output) {
   })
     
   output$topTable <- renderDataTable({
+
+    if (input$analysisSelection == 1){
+        hide("vennDiagram")
+        hide("geneTable")
+        hide("topTable")
+    }
     
     if (input$analysisSelection == 2){
       completedAnalysis$topGeneTable()
+      toggle("topTable")
+
     }else{
     }
   })
@@ -192,7 +200,10 @@ shinyServer(function(input, output) {
   output$vennDiagram <- renderPlot({
     
     if(input$analysisSelection == 3){
+    hide("topTable")
+    hide("geneTable")
     completedAnalysis$scaledDiagram()
+    toggle("vennDiagram")
     }else{
     }
   })
@@ -200,6 +211,7 @@ shinyServer(function(input, output) {
   output$geneTable <- renderDataTable({
     if(input$analysisSelection == 4){
       completedAnalysis$allGeneTable()
+      toggle("geneTable")
     }else{
     }
   })
