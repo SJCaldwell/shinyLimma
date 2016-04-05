@@ -244,13 +244,23 @@ tabPanel("Analysis",
 tabPanel("Export Reports",
     sidebarLayout(
       sidebarPanel(
-        p("Export your results here!"),
+        h4("Reproducible Script"),
         br(),
+        p("Hit the download button to get an R file you can share with your researchers, PI's, and friends!"),
         br(),
-        downloadLink("codeDownloader", "Get my code!")
+        downloadButton("codeDownloader", "Get my code!")
                   ),
       mainPanel(
-        h4("Options")
+        h4("Options For Report"),
+          textInput("report_title", label = h5("Title of Report"),
+                    value = "Unique title..."),
+          textInput("report_author", label = h5("Author of the report"),
+                    value = "Your name here!"),
+          selectInput("report_output", label = h5("Style of Report to Generate"), 
+                      choices = list("PDF" = 1, "HTML" = 2, "Word" = 3), selected = 1),
+        br(),
+        downloadButton("reportDownloader", "Generate my report!")
+        
                )
                   )
 ),
