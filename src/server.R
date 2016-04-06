@@ -41,6 +41,7 @@ shinyServer(function(input, output) {
   userDesign = NULL
   completedAnalysis = NULL
   scripter = NULL
+  reporter = NULL
 
   observe({
     #Vapply can force a return to logical
@@ -227,18 +228,17 @@ shinyServer(function(input, output) {
       content = function(con){
         scripter <<- script_writer$new(userInput, userProcessed, userDesign, completedAnalysis)
         code <- scripter$output_script()
-        cat("\nBRUH TYPE OF CODE IS\n")
-        cat(typeof(code))
-        cat("\n")
         writeLines(code, con)
       }
     )
-####EXPERIMENTAL####
-  output$saveStateNav <- downloadHandler(
-    filename = function() {paste0("radiant-state-",Sys.date(),".rda")
-    },
-    content = function(file){
-      saveState(file)
-      }
-    )
+
+  output$reportDownloader <- downloadHandler(
+    filename = function(){
+      paste('report-', Sys.Date(), '.Rmd', sep = '')
+      },
+      content = function(con){
+        reporter <<- report_generator$new(userInput, userProcessed, userDesign, completedAnalysis)
+        report <- reporter$output_RMD()
+        writeLines(report, con)
+        })
 })

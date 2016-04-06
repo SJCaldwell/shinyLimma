@@ -251,6 +251,7 @@ tabPanel("Export Reports",
         downloadButton("codeDownloader", "Get my code!")
                   ),
       mainPanel(
+        div(
         h4("Options For Report"),
           textInput("report_title", label = h5("Title of Report"),
                     value = "Unique title..."),
@@ -259,8 +260,8 @@ tabPanel("Export Reports",
           selectInput("report_output", label = h5("Style of Report to Generate"), 
                       choices = list("PDF" = 1, "HTML" = 2, "Word" = 3), selected = 1),
         br(),
-        downloadButton("reportDownloader", "Generate my report!")
-        
+        downloadButton("reportDownloader", "Generate my report!"),
+        align = "center")
                )
                   )
 ),
