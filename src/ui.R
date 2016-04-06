@@ -258,7 +258,7 @@ tabPanel("Export Reports",
           textInput("report_author", label = h5("Author of the report"),
                     value = "Your name here!"),
           selectInput("report_output", label = h5("Style of Report to Generate"), 
-                      choices = list("PDF" = 1, "HTML" = 2, "Word" = 3), selected = 1),
+                      choices = list("PDF" = "PDF", "HTML" = "HTML", "Word" = "Word"), selected = "PDF"),
         br(),
         downloadButton("reportDownloader", "Generate my report!"),
         align = "center")

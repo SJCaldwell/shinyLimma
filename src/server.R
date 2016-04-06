@@ -24,6 +24,7 @@ source("objects/metadata.R")
 source("objects/exp_design.R")
 source("objects/differentialExpression.R")
 source("objects/script_writer.R")
+source("objects/report_generator.R")
 source("global.R", local = FALSE)
 
 # setting this option. Here we'll raise limit to 130MB.
@@ -237,7 +238,10 @@ shinyServer(function(input, output) {
       paste('report-', Sys.Date(), '.Rmd', sep = '')
       },
       content = function(con){
-        reporter <<- report_generator$new(userInput, userProcessed, userDesign, completedAnalysis)
+        title <- input$report_title
+        author <- input$report_author
+        output_type <- input$report_output
+        reporter <<- report_generator$new(userInput, userProcessed, userDesign, completedAnalysis, title, author, output_type)
         report <- reporter$output_RMD()
         writeLines(report, con)
         })
