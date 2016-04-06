@@ -73,15 +73,20 @@ shinyServer(function(input, output) {
 
     output$exploratoryText <- renderText({
       if (input$exploreSelection == 1){
-        paste("Choose the exploratory analysis technique")
+        hide("exploratoryPlot")
+
       }
       
       else if (input$exploreSelection == 2){
         paste("Displaying Heatmap of Raw Data")
+        hide("exploratoryPlot")
+        toggle("exploratoryPlot")
       }
       
       else if(input$exploreSelection == 3){
         paste("Displaying boxplot of Raw Data")
+        hide("exploratoryPlot")
+        toggle("exploratoryPlot")
       }
     })
     
