@@ -7,8 +7,8 @@ ui <- (tagList(
   tags$head(tags$link(rel = 'icon', href = "favicon.ico", type = "image/x-icon")),
   titlePanel(title = "", windowTitle = "Shiny-Limma!"),
   tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.css")),
-  tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
-  tags$head(tags$script(type="text/javascript", src = "busy.js")),
+  tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "css/style.css")),
+  tags$head(tags$script(type="text/javascript", src = "js/busy.js")),
   
   navbarPage(title = a(href="http://shanecaldwell.info/shinyLimma/", "Shiny-Limma!"),
 ################################################################
