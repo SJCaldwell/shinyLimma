@@ -208,15 +208,11 @@ hideModal <- function(id, session) {
   output$topTable <- renderDataTable({
 
     if (input$analysisSelection == 1){
-        hide("vennDiagram")
-        hide("geneTable")
-        hide("topTable")
+      hideModal("vennDiagram", session)
     }
     
     if (input$analysisSelection == 2){
-      hide("vennDiagram")
-      hide("geneTable")
-      toggle("topTable")
+      hideModal("vennDiagram", session)
       completedAnalysis$topGeneTable()
     }else{
     }
@@ -225,19 +221,15 @@ hideModal <- function(id, session) {
   output$vennDiagram <- renderPlot({
     
     if(input$analysisSelection == 3){
+      showModal("vennDiagram", session)
       completedAnalysis$scaledDiagram()
-      hide("topTable")
-      hide("geneTable")
-      toggle("vennDiagram")
     }else{
     }
   })
   
   output$geneTable <- renderDataTable({
     if(input$analysisSelection == 4){
-      hide("topTable")
-      hide("vennDiagram")
-      toggle("geneTable")
+      hideModal("vennDiagram", session)
       completedAnalysis$allGeneTable()
 
     }else{
