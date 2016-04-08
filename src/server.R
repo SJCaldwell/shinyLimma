@@ -30,12 +30,25 @@ source("global.R", local = FALSE)
 # setting this option. Here we'll raise limit to 130MB.
 options(shiny.maxRequestSize = 130*1024^2)
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
   downloadReady <- FALSE
   
   isDownloadReady <- function(){
     return (downloadReady)
   }
+
+showModal <- function(id,session) {
+  session$sendCustomMessage(type="jsCode",
+                            list(code= paste("$('#",id,"').modal('show')"
+                                             ,sep="")))
+}
+
+hideModal <- function(id, session) {
+  session$sendCustomMessage(type="jsCode",
+                            list(code= paste("$('#",id,"').modal('hide')"
+                                             ,sep="")))
+}
+
   #Globals that will represent the user input.
   userInput = NULL
   userProcessed = NULL
@@ -56,14 +69,14 @@ shinyServer(function(input, output) {
     shinyjs::toggleState(id = 'fileSubmitter', condition = mandatoryFilledDataset)
   })
   
-  observeEvent(input$fileSubmitter, {    
+  observeEvent(input$fileSubmitter, {
+    showModal("loading", session)
     userInput <<- inputSL$new(input$probeFile, input$controlProbeFile, input$targets)
     output$rawPlot <- renderPlot({
-      progress <- shiny::Progress$new()
-      on.exit(progress$close())
-      progress$set(message = "Loading data... this may take a while...", value = 0.3)
-      progress$set(message = "Almost done!", value = 1.0)
-      userInput$densityPlot()
+      toShow <- userInput$densityPlot()
+      hideModal("loading", session)
+      toShow
+      
   })
     ################################################################
     
@@ -165,8 +178,10 @@ shinyServer(function(input, output) {
       userDesign <<- exp_design$new(input$group1Contrast, input$group2Contrast, userInput$targetManager$validGroups, userInput$targetManager$targets)
       if (userDesign$validSyntax){
         cat("\nwe str8 contrast design works")
+        showModal("matrixDone", session)
       }else{
-        cat("\nTO-DO:\nSomehow the console should display this is a problem and that the user should try again.")
+        showModal("matrixFailed", session)
+        
       }
   })
   
@@ -186,6 +201,8 @@ shinyServer(function(input, output) {
     completedAnalysis <<- differentialExpression$new(userDesign$contrastMatrix, 
                                     userProcessed$normalizedData, userDesign$designExpression)
     downloadReady <<- TRUE
+    showModal("analysisDone", session)
+    
   })
     
   output$topTable <- renderDataTable({

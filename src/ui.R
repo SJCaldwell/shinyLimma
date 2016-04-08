@@ -2,14 +2,47 @@ library(shiny)
 library(shinyBS)
 
 ui <- (tagList(
-  #Necessary call to shinyjs, independent of any tab. DON'T MOVE
   shinyjs::useShinyjs(),
   tags$head(tags$link(rel = 'icon', href = "favicon.ico", type = "image/x-icon")),
   titlePanel(title = "", windowTitle = "Shiny-Limma!"),
   tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.css")),
-  tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "css/style.css")),
-  tags$head(tags$script(type="text/javascript", src = "js/busy.js")),
-  
+  tags$head(tags$script(src = "js/script.js")),
+  HTML("<div id='loading' class='modal fade' role='dialog'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h4 class='modal-title', align = 'center'>Loading, One Moment...</h4>
+      </div>
+    </div>
+  </div>
+</div>"),
+    HTML("<div id='matrixDone' class='modal fade' role='dialog'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h4 class='modal-title', align = 'center'>Contrast Matrix Loaded</h4>
+      </div>
+    </div>
+  </div>
+</div>"),
+  HTML("<div id='analysisDone' class='modal fade' role='dialog'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h4 class='modal-title', align = 'center'>Analysis Complete</h4>
+      </div>
+    </div>
+  </div>
+</div>"),
+  HTML("<div id='matrixFailed' class='modal fade' role='dialog'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h4 class='modal-title', align = 'center'>Detected syntax error. Please try again.</h4>
+      </div>
+    </div>
+  </div>
+</div>"),
   navbarPage(title = a(href="http://shanecaldwell.info/shinyLimma/", "Shiny-Limma!"),
 ################################################################
 
@@ -58,8 +91,9 @@ tabPanel("Choose Dataset",
       tags$style(type="text/css", "body { overflow-y: scroll; }"),
       #Button that reads in files and attempts to run ilmn
       plotOutput("rawPlot")
-             )
+  
                     )
+    )
   ),
 ################################################################
 
