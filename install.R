@@ -39,7 +39,12 @@ vanilla_install_packages <- c("limma",
 							                  'png',
 							                  'vsn',
 							                 'RUnit',
-							                 'reshape')
+							                 'reshape',
+											 'digest',
+											 'Rcpp',
+											 'VennDiagram',
+											 'convert'
+											)
 download_not_installed(vanilla_install_packages)
 ###################################
 #Should use latest version of shiny
