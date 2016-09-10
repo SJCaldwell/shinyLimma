@@ -260,7 +260,14 @@ tabPanel("Analysis",
       selectInput("analysisSelection", label = "How do you want to look at your results?",
                  choices = list("Take your pick!" = 1, "Top Table" = 2,
                  "Venn Diagram" = 3, "Select a Gene" = 4),
-                 selected = 1)
+                 selected = 1),
+      conditionalPanel(
+        condition = "input.analysisSelection == 4",
+        selectInput("exportCriteria", label = p("Which genes to export"),
+                    choices = list("All Genes" = 1, "Nominally Significant" = 2, "Significant Post Multiple Test" = 3),
+                    selected = 1),
+        downloadButton('downloadGenes', 'Download')
+      )
               ),
     mainPanel(
       h3("Analysis Results"),
