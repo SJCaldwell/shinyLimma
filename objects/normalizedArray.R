@@ -34,7 +34,7 @@ normalizedArray <- R6Class("rawArray",
 			LOESS = 4
 
 			if (style == NONE){
-				return(data)
+				return(normalizeBetweenArrays(data, method="none"))
 			}
 			else if (style == VSN){
 				return (normalizeVSN(data))

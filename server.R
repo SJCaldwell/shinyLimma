@@ -105,7 +105,7 @@ hideModal <- function(id, session) {
     
     output$exploratoryPlot <- renderPlot({
       
-      plot <- getExploratoryPlot(input$exploreSelection, userInput$dataManager$rawData)
+      plot <- getExploratoryPlot(input$exploreSelection, userInput$dataManager$rawData, userInput$targetManager$targets)
       if (isnt.null(plot)){
         plot
       }
@@ -177,7 +177,6 @@ hideModal <- function(id, session) {
   observeEvent(input$contrastSubmitter, {
       userDesign <<- exp_design$new(input$group1Contrast, input$group2Contrast, userInput$targetManager$validGroups, userInput$targetManager$targets)
       if (userDesign$validSyntax){
-        cat("\nwe str8 contrast design works")
         showModal("matrixDone", session)
       }else{
         showModal("matrixFailed", session)
@@ -198,8 +197,14 @@ hideModal <- function(id, session) {
     
     ###############################################################
   observeEvent(input$analysisSubmitter, {
-    completedAnalysis <<- differentialExpression$new(userDesign$contrastMatrix, 
+    #If user chose to normalize data
+    if(!is.null(userProcessed$normalizedData)){
+      completedAnalysis <<- differentialExpression$new(userDesign$contrastMatrix, 
                                     userProcessed$normalizedData, userDesign$designExpression)
+      #if they skipped it
+    }else{
+      completedAnalysis <<- differentialExpression$new(userDesign$contrastMatrix, userInput$dataManager$rawData, userDesign$designExpression)
+    }
     downloadReady <<- TRUE
     showModal("analysisDone", session)
     
