@@ -171,7 +171,7 @@ hideModal <- function(id, session) {
   })
   ################################################################
   
-  #### SERVER-SIDE code for CONTRAST MATRiX section HERE####
+  #### SERVER-SIDE code for CONTRAST MATRIX section HERE####
   
   ###############################################################  
   observeEvent(input$contrastSubmitter, {
@@ -236,11 +236,21 @@ hideModal <- function(id, session) {
     if(input$analysisSelection == 4){
       hideModal("vennDiagram", session)
       completedAnalysis$allGeneTable()
-
     }else{
     }
   })
- 
+  
+  output$downloadGenes <- downloadHandler(
+    filename = function() {paste('SL_', Sys.time(), '.csv', sep='') },
+    content = function(file) {
+      write.csv(completedAnalysis$allGeneTable(), file)
+    }
+  )
+  ################################################################
+  
+  #### SERVER-SIDE code for REPORTING section HERE####
+  
+  ###############################################################
   output$codeDownloader <- downloadHandler(
       filename = function(){
         paste('script-', Sys.Date(), '.R', sep ='')
