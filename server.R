@@ -16,6 +16,7 @@ source("helpers/ggplotBoxPlotForArrays.R")
 source("helpers/HeatmapRunner.R")
 source("helpers/normalization.R")
 source("helpers/scaledVennDiagram.R")
+source("helpers/filter.R")
 source("objects/datasetValidator.R")
 source("objects/rawArray.R")
 source("objects/normalizedArray.R")
@@ -243,7 +244,12 @@ hideModal <- function(id, session) {
   output$downloadGenes <- downloadHandler(
     filename = function() {paste('SL_', Sys.time(), '.csv', sep='') },
     content = function(file) {
-      write.csv(completedAnalysis$allGeneTable(), file)
+      if (input$exportCriteria == '1' ){
+        write.csv(completedAnalysis$allGeneTable(), file)
+      }else{
+        filteredValues = FilterBy(completedAnalysis$allGeneTable, input$exportCriteria, input$cutoff)
+        write.csv(completedAnalysis$allGeneTable(), file)
+      }
     }
   )
   ################################################################
