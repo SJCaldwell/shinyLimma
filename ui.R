@@ -264,10 +264,10 @@ tabPanel("Analysis",
       conditionalPanel(
         condition = "input.analysisSelection == 4",
         selectInput("exportCriteria", label = p("Which genes to export"),
-                    choices = list("All Genes" = 1, "Nominally Significant" = 2, "Significant Post Multiple Test" = 3),
-                    selected = 1),
+                    choices = list("All Genes" = "All", "Nominally Significant" = "P.Value", "Significant Post Multiple Test" = "adj.P.Val"),
+                    selected = "All"),
         conditionalPanel(
-          condition = "input.exportCriteria == 2 || input.exportCriteria == 3",
+          condition = "input.exportCriteria != 'All'",
           sliderInput("cutoff", "Significance Score Cutoff", min = 0, max = 1, value = 0.05, step = 0.01)
         ),
         downloadButton('downloadGenes', 'Download')

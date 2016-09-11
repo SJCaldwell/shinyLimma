@@ -244,11 +244,11 @@ hideModal <- function(id, session) {
   output$downloadGenes <- downloadHandler(
     filename = function() {paste('SL_', Sys.time(), '.csv', sep='') },
     content = function(file) {
-      if (input$exportCriteria == '1' ){
+      if (input$exportCriteria == 'All' ){
         write.csv(completedAnalysis$allGeneTable(), file)
       }else{
-        filteredValues = FilterBy(completedAnalysis$allGeneTable, input$exportCriteria, input$cutoff)
-        write.csv(completedAnalysis$allGeneTable(), file)
+        filteredValues = FilterBy(completedAnalysis$allGeneTable(), input$exportCriteria, input$cutoff)
+        write.csv(filteredValues, file)
       }
     }
   )
