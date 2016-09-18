@@ -18,15 +18,15 @@ script_writer <- R6Class("script_writer",
 			code <- paste0(code, "library(limma)\n")
 			code <- paste0(code, "library(statmod)\n")
 			code <- paste0(code, "library(fdrtool)\n\n")
-			code <- paste0(code, "filepath <- ", "'", "probe.txt", "'\n")
+			code <- paste0(code, "filepath <- ", "'", "Enter path to probe file, control probe file, and target file here", "'\n")
 			code <- paste0(code, "setwd(filepath)\n")
-			code <- paste0(code, "probeData <- ", "'", "controlProbe.txt", "'\n")
-			code <- paste0(code, "CtrlProbe <- ", "'", "okay", "'\n")
+			code <- paste0(code, "probeData <- ", "'", self$input$probe_path, "'\n")
+			code <- paste0(code, "CtrlProbe <- ", "'", self$input$control_path, "'\n")
 			code <- paste0(code, "targets <- readTargets()","\n")
 			code <- paste0(code, 'rawExpression <- read.ilmn(files = probeData, ctrlfiles = CtrlProbe, probeid="ProbeID", other.columns = "Detection")\n')
 
 			# #Quality Control
-			code <- paste0(code, ("rawExpression <- backgroundCorrect(rawExpression, method = 'half')\n"))
+			code <- self$background_correct_handler(code)
 			code <- paste0(code, "passedQC <- rowSums(rawExpression$other$Detection <=", toString(self$preprocessing$filter_level),") >= ", toString(self$preprocessing$ratio), "\n")
 			
 			# self$normalization_handler()
@@ -93,9 +93,10 @@ script_writer <- R6Class("script_writer",
 			code <<- paste0(code, ('GEC <- paste(targets$CSE, targets$Exp_Cont, targets$CSE, sep = "."\n'))
 		},
 
-		background_correct_handler = function(){
-			if (self$input$prepcoressing shit){
-		    	code <<- paste0(code, ('rawExpression <- backgroundCorrect(rawExpression, method = 	"half")\n'))
+		background_correct_handler = function(code){
+			if (self$preprocessing$bgCorrect){
+		    	code <- paste0(code, ('rawExpression <- backgroundCorrect(rawExpression, method = 	"half")\n'))
 			}
+		  return (code)
 }
 ))

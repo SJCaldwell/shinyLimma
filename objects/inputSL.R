@@ -3,8 +3,14 @@ inputSL = R6Class("inputSL",
 		dataValidator = NULL,
 		dataManager = NULL,
 		targetManager = NULL,
+		target_path = NULL,
+		probe_path = NULL,
+		control_path = NULL, 
 
 		initialize = function(probe, control, target){
+		  self$probe_path = probe$name
+		  self$control_path = control$name
+		  self$target_path = target$name
 			self$dataValidator <<- Validator$new(probe, control, target)
 			if (self$isValid()){
 				self$loadArrayData(probe, control)
@@ -35,7 +41,6 @@ inputSL = R6Class("inputSL",
 		},
 		
 		densityPlot = function(){
-		  cat("Call to datamanger")
 			return(self$dataManager$densityPlot())
 		}
 		
