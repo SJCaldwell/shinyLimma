@@ -110,11 +110,6 @@ hideModal <- function(id, session) {
         plot
       }
       })
-    
-    observeEvent(input$QCGenerator, {
-      QC_Reporter(probePath)
-      changeDownload()
-    })
     ################################################################
     
     #### SERVER-SIDE code for PRE-PROCESSING section HERE####

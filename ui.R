@@ -113,19 +113,6 @@ tabPanel("Explore",
                   choices = list("Choose your technique..." = 1, "Heatmap" = 2, "Boxplot" = 3),
                   selected = 1),
       br(),
-      br(),
-      strong("Array Quality Report"),
-      br(),
-      actionButton("QCGenerator","Generate Report"),
-      br(),
-      br(),
-      p("ArrayQC reports cover a gambit of quality
-        control reports for arrays. This will open a new tab upon completion,
-        but could take a little while to run."),
-      conditionalPanel(
-          condition = "output.download == true",
-          strong("YOUR DOWNLOAD IS RDY AF NOW")
-                      ),
       br()
                 ),
     mainPanel(
