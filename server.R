@@ -15,7 +15,6 @@ source("helpers/limmaTool_Functions.R")
 source("helpers/ggplotBoxPlotForArrays.R")
 source("helpers/HeatmapRunner.R")
 source("helpers/normalization.R")
-source("helpers/scaledVennDiagram.R")
 source("helpers/filter.R")
 source("objects/datasetValidator.R")
 source("objects/rawArray.R")
@@ -214,28 +213,16 @@ hideModal <- function(id, session) {
   output$topTable <- renderDataTable({
 
     if (input$analysisSelection == 1){
-      hideModal("vennDiagram", session)
     }
     
     if (input$analysisSelection == 2){
-      hideModal("vennDiagram", session)
       completedAnalysis$topGeneTable()
     }else{
     }
   })
   
-  output$vennDiagram <- renderPlot({
-    
-    if(input$analysisSelection == 3){
-      showModal("vennDiagram", session)
-      completedAnalysis$scaledDiagram()
-    }else{
-    }
-  })
-  
   output$geneTable <- renderDataTable({
-    if(input$analysisSelection == 4){
-      hideModal("vennDiagram", session)
+    if(input$analysisSelection == 3){
       completedAnalysis$allGeneTable()
     }else{
     }

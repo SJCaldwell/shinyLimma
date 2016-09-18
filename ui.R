@@ -259,10 +259,10 @@ tabPanel("Analysis",
       br(),
       selectInput("analysisSelection", label = "How do you want to look at your results?",
                  choices = list("Take your pick!" = 1, "Top Table" = 2,
-                 "Venn Diagram" = 3, "Select a Gene" = 4),
+                 "Select a Gene" = 3),
                  selected = 1),
       conditionalPanel(
-        condition = "input.analysisSelection == 4",
+        condition = "input.analysisSelection == 3",
         selectInput("exportCriteria", label = p("Which genes to export"),
                     choices = list("All Genes" = "All", "Nominally Significant" = "P.Value", "Significant Post Multiple Test" = "adj.P.Val"),
                     selected = "All"),
@@ -276,8 +276,7 @@ tabPanel("Analysis",
     mainPanel(
       h3("Analysis Results"),
       dataTableOutput("topTable"),
-      dataTableOutput("geneTable"),
-      plotOutput("vennDiagram")
+      dataTableOutput("geneTable")
             )
               )
 ),
