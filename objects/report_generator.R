@@ -24,7 +24,7 @@ report_generator <- R6Class("report_generator",
 			return (report)
 		},
 
-		generate_report(report){
+		generate_report = function(report){
 			report <<- self$add_header(report, self$title, self$author, self$output_type)
 			report <<- self$add_section_break(report) 
 			report <<- self$add_opening(report)
