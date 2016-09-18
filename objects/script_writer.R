@@ -27,7 +27,7 @@ script_writer <- R6Class("script_writer",
 
 			# #Quality Control
 			code <- paste0(code, ("rawExpression <- backgroundCorrect(rawExpression, method = 'half')\n"))
-			code <- paste0(code, "passedQC <- rowSums(rawExpression$other$Detection <=", toString(self$preprocessing$filter_level),") >= ", toString(self$preprocessing$ratio), ")\n")
+			code <- paste0(code, "passedQC <- rowSums(rawExpression$other$Detection <=", toString(self$preprocessing$filter_level),") >= ", toString(self$preprocessing$ratio), "\n")
 			
 			# self$normalization_handler()
 			code <- paste0(code, ("normExpression <- normExpression[passedQC,]\n"))
@@ -42,7 +42,7 @@ script_writer <- R6Class("script_writer",
 
 			code <- paste0(code, ('design <- model.matrix(~0+GEC)\n'))
 
-			code <- paste0(code, ('colnames(design) <-levels(as.factor(GEC)\n'))
+			code <- paste0(code, ('colnames(design) <-levels(as.factor(GEC))\n'))
 			# #Choices become relevant for deciding which code to produce
 			# #some lines must be altered, some must never be created at all
 			if(self$preprocessing$bgCorrect){
@@ -91,5 +91,11 @@ script_writer <- R6Class("script_writer",
 			targets = self$input$targetManager$targets
 			###get a session going n see whacha gotta do in targets to infer the correct numbers
 			code <<- paste0(code, ('GEC <- paste(targets$CSE, targets$Exp_Cont, targets$CSE, sep = "."\n'))
-		}
+		},
+
+		background_correct_handler = function(){
+			if (self$input$prepcoressing shit){
+		    	code <<- paste0(code, ('rawExpression <- backgroundCorrect(rawExpression, method = 	"half")\n'))
+			}
+}
 ))
