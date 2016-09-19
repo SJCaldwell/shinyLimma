@@ -193,18 +193,21 @@ hideModal <- function(id, session) {
   })
    
    validate <- function(mat){
-	group1 <- input$group1Contrast
-    group2 <- input$group2Contrast
+	group1 <- strsplit(input$group1Contrast, split = ".", fixed = TRUE)
+    group2 <- strsplit(input$group2Contrast, split = ".", fixed = TRUE)
     for (i in 1:ncol(userInput$targetManager$targets)){
 		updateTableStyle(session, "targetsTable", "valid",
                   which(cachedTargets[[i]] != ""), i)
 }  
     for (i in 1:ncol(userInput$targetManager$targets)){
-
+    for (j in 1:length(group1)){
     updateTableStyle(session, "targetsTable", "warning", 
-                  which(cachedTargets[[i]] == group1), i)
+                  which(cachedTargets[[i]] == group1[j]), i)
+		}
+    for (j in 1:length(group2)){
 	updateTableStyle(session, "targetsTable", "invalid", 
-				  which(cachedTargets[[i]] == group2), i)
+				  which(cachedTargets[[i]] == group2[j]), i)
+}
 }
 	}
 
