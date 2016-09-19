@@ -186,14 +186,19 @@ hideModal <- function(id, session) {
   output$targetsTable <- renderHtable({
       if(isnt.null(userInput)){
           toDisplay <- as.data.frame(userInput$targetManager$targets)
-          cachedTargets <<- toDisplay 
-		      return (toDisplay)
+          cachedTargets <<- toDisplay
+          initialize(toDisplay) 
+		  return (toDisplay)
       }
   })
    
    validate <- function(mat){
 	group1 <- input$group1Contrast
-  group2 <- input$group2Contrast
+    group2 <- input$group2Contrast
+    for (i in 1:ncol(userInput$targetManager$targets)){
+		updateTableStyle(session, "targetsTable", "valid",
+                  which(cachedTargets[[i]] != ""), i)
+}  
     for (i in 1:ncol(userInput$targetManager$targets)){
 
     updateTableStyle(session, "targetsTable", "warning", 
@@ -201,7 +206,14 @@ hideModal <- function(id, session) {
 	updateTableStyle(session, "targetsTable", "invalid", 
 				  which(cachedTargets[[i]] == group2), i)
 }
-	} 
+	}
+
+   initialize <- function(mat){
+   	  for (i in 1:ncol(userInput$targetManager$targets)){
+        updateTableStyle(session, "targetsTable", "valid",
+                  which(cachedTargets[[i]] != ""), i)
+  }
+} 
     ################################################################
     
     #### SERVER-SIDE code for ANALYSIS section HERE####
