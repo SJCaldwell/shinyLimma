@@ -8,6 +8,7 @@ library(ggplot2)
 library(RUnit)
 library(tools)
 library(R6)
+library(shinyTable)
 source("helpers/arrayQCRunner.R")
 source("helpers/helper.R")
 source("helpers/syntaxChecker.R")
@@ -173,19 +174,34 @@ hideModal <- function(id, session) {
       userDesign <<- exp_design$new(input$group1Contrast, input$group2Contrast, userInput$targetManager$validGroups, userInput$targetManager$targets)
       if (userDesign$validSyntax){
         showModal("matrixDone", session)
+        validate(toDisplay) 
       }else{
         showModal("matrixFailed", session)
         
       }
   })
-  
-  output$targetsTable <- renderDataTable({
-    cat("attempting to display targets table")
+
+ cachedTargets <- NULL
+ 
+  output$targetsTable <- renderHtable({
       if(isnt.null(userInput)){
           toDisplay <- as.data.frame(userInput$targetManager$targets)
-          toDisplay 
+          cachedTargets <<- toDisplay 
+		      return (toDisplay)
       }
-  })  
+  })
+   
+   validate <- function(mat){
+	group1 <- input$group1Contrast
+  group2 <- input$group2Contrast
+    for (i in 1:ncol(userInput$targetManager$targets)){
+
+    updateTableStyle(session, "targetsTable", "warning", 
+                  which(cachedTargets[[i]] == group1), i)
+	updateTableStyle(session, "targetsTable", "invalid", 
+				  which(cachedTargets[[i]] == group2), i)
+}
+	} 
     ################################################################
     
     #### SERVER-SIDE code for ANALYSIS section HERE####

@@ -1,5 +1,6 @@
 library(shiny)
 library(shinyBS)
+library(shinyTable)
 
 ui <- (tagList(
   shinyjs::useShinyjs(),
@@ -223,7 +224,7 @@ tabPanel("Contrast Matrix",
                 ),
     mainPanel(
       h4("Specification of Contrast Matrix"),
-        dataTableOutput("targetsTable")
+        htable("targetsTable", colHeaders = "provided")
               )
                 )
          ),
