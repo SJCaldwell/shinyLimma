@@ -197,18 +197,24 @@ hideModal <- function(id, session) {
     group2 <- strsplit(input$group2Contrast, split = ".", fixed = TRUE)[[1]]
     group1_attributes = list()
     group2_attributes = list()
+    cat("Length of group 1 is ", length(group1), "\n")
+    cat("Length of group 2 is " , length(group2), "\n")
+    
     for (i in 1:ncol(userInput$targetManager$targets)){
 		updateTableStyle(session, "targetsTable", "valid",
                   which(cachedTargets[[i]] != ""), i)
     }  
     for (i in 1:ncol(userInput$targetManager$targets)){
-    cat("length is... ", length(group2))
-    cat(group2)
     for (j in 1:length(group1)){
-      group1_attributes[[length(group1_attributes) + 1]] = which(cachedTargets[[i]] != group1[j])
+      if (length(which(cachedTargets[[i]] == group1[j])) > 0){
+      group1_attributes[[length(group1_attributes) + 1]] = which(cachedTargets[[i]] == group1[j])
+      }
+      cat("result of which is", which((cachedTargets[[i]] == group1[j])), " for targets ", cachedTargets[[i]], "and group : ", group1[j], "\n")
     }
     for (j in 1:length(group2)){
-      group2_attributes[[length(group2_attributes) + 1]] = which(cachedTargets[[i]] != group2[j])
+      if(length(which(cachedTargets[[i]] == group2[j])) > 0){
+      group2_attributes[[length(group2_attributes) + 1]] = which(cachedTargets[[i]] == group2[j])
+      }
     }
     }
     for (i in 1:length(group1)){
